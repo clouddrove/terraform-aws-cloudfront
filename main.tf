@@ -38,7 +38,7 @@ resource "aws_cloudfront_distribution" "default" {
     cached_methods   = "${var.cached_methods}"
     target_origin_id = "${local.s3_origin_id}"
     compress         = "${var.compress}"
-    trusted_signers  =  ["${var.trusted_signers}"]
+    trusted_signers  =  ["self"]
     smooth_streaming = "${var.smooth_streaming}"
     forwarded_values {
       query_string = "${var.forward_query_string}"
