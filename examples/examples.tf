@@ -3,7 +3,7 @@ provider "aws" {
   profile = "defult"
 }
 module "cdn" {
-  source = "https://github.com/clouddrove/terraform-aws-cloudfront-cdn-secure.git"
+  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn-secure.git"
   organization             =    "clouddrove"
   environment              =    "dev"
   name                     =    "backend"
