@@ -1,0 +1,54 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+
+# Name of this project
+name : terraform-aws-cloudfront-cdn
+
+# License of this project
+license: "MIT"
+
+# Canonical GitHub repo
+github_repo: clouddrove/terraform-aws-cloudfront-cdn
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://img.shields.io/badge/build-passing-green.svg"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-vpc"
+
+#  Related Projects of this project
+related:
+  - name: "terraform-aws-s3"
+    description: "Please insert description of demo here."
+    url: "https://github.com/clouddrove/terraform-aws-s3"
+
+#  description of this project
+description: |-
+  Terraform Module that implements a CloudFront Web Distribution (CDN).
+
+# extra content
+# please not remove these two If you need add more
+include:
+  - "terraform.md"
+  - "targets.md"
+
+# How to use this project
+usage : |-
+  ### Simple Example
+  Include this repository as a module in your existing terraform code:
+  ```hcl
+  module "example" {
+      source      = "./../"
+      attr1       = "attr1"
+      attr2       = "attr2"
+    }
+  ```
+# Contributors to this project
+contributors:
+  - name: "Sohan Yadav"
+    github: "sohanyadav"
+

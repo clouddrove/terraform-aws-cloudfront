@@ -1,45 +1,55 @@
-variable "organization" {
-  type        = "string"
-  description = "Organization (e.g. `cp` or `anmolnagpal`)"
+#Module      : LABEL
+#Description : Terraform label module variables
+variable "application" {
+  type        = string
+  description = "Application (e.g. `cp` or `clouddrove`)"
 }
 
 variable "environment" {
-  type        = "string"
+  type        = string
   description = "Environment (e.g. `prod`, `dev`, `staging`)"
 }
 
 variable "name" {
   description = "Name  (e.g. `app` or `cluster`)"
-  type        = "string"
+  type        = string
 }
 
-variable "delimiter" {
-  type        = "string"
-  default     = "-"
-  description = "Delimiter to be used between `namespace`, `stage`, `name` and `attributes`"
+variable "label_order" {
+  type        = list
+  default     = []
+  description = "label order, e.g. `name`,`application`"
 }
 
 variable "attributes" {
-  type        = "list"
+  type        = list(string)
   default     = []
   description = "Additional attributes (e.g. `1`)"
 }
+
 variable "tags" {
-  type        = "map"
+  type        = map(string)
   default     = {}
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)"
 }
+
+# Module      : CDN Module
+# Description : Terraform CDN module variables
 variable "aliases" {
-  type        = "list"
+  type        = list(string)
   description = "List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront"
   default     = []
 }
-variable "origin_id" {
-  description = "(Required) - A unique identifier for the origin"
+
+variable "bucket_name" {
+  type        = string
+  description = "A unique identifier for the origin"
   default     = ""
 }
+
 variable "bucket_domain_name" {
-  description = "(Required) - domain of s3"
+  type        = string
+  description = "The DNS domain name of either the S3 bucket, or web site of your custom origin"
   default     = ""
 }
 
@@ -48,149 +58,177 @@ variable "origin_path" {
   default     = ""
 }
 
-
 variable "viewer_protocol_policy" {
   description = "allow-all, redirect-to-https"
   default     = ""
 }
 
 variable "allowed_methods" {
-  type        = "list"
+  type        = list(string)
   default     = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
   description = "List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront"
 }
+
 variable "cached_methods" {
-  type        = "list"
+  type        = list(string)
   default     = ["GET", "HEAD"]
   description = "List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD)"
 }
+
 variable "compress" {
-  default     = ""
+  type        = string
   description = "Compress content for web requests that include Accept-Encoding: gzip in the request header"
+  default     = ""
 }
 
 variable "default_ttl" {
-  default     = "60"
+  type        = string
   description = "Default amount of time (in seconds) that an object is in a CloudFront cache"
+  default     = "60"
 }
 
 variable "max_ttl" {
-  default     = "31536000"
+  type        = string
   description = "Maximum amount of time (in seconds) that an object is in a CloudFront cache"
+  default     = "31536000"
 }
+
 variable "min_ttl" {
-  default     = "0"
+  type        = string
   description = "Minimum amount of time that you want objects to stay in CloudFront caches"
+  default     = "0"
 }
+
 variable "forward_query_string" {
-  default     = "false"
+  type        = string
   description = "Forward query strings to the origin that is associated with this cache behavior"
+  default     = "false"
 }
+
 variable "forward_header_values" {
-  type        = "list"
+  type        = list(string)
   description = "A list of whitelisted header values to forward to the origin"
   default     = ["Access-Control-Request-Headers", "Access-Control-Request-Method", "Origin"]
 }
 
 variable "smooth_streaming" {
-  default     = "false"
+  type        = string
   description = "(Optional) - Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior"
+  default     = "false"
 }
+
 variable "forward_cookies" {
-  default     = "none"
+  type        = string
   description = "Time in seconds that browser can cache the response for S3 bucket"
+  default     = "none"
 }
 
 variable "price_class" {
-  default     = "PriceClass_100"
+  type        = string
   description = "Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`"
+  default     = "PriceClass_100"
 }
+
 variable "geo_restriction_type" {
-  default     = "none"
+  type        = string
   description = "Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist`"
+  default     = "none"
 }
 
 variable "geo_restriction_locations" {
-  type = "list"
-  default     = []
+  type        = list(string)
   description = "List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist)"
+  default     = []
 }
+
 variable "acm_certificate_arn" {
+  type        = string
   description = "Existing ACM Certificate ARN"
   default     = ""
 }
+
 variable "minimum_protocol_version" {
+  type        = string
   description = "Cloudfront TLS minimum protocol version"
   default     = "TLSv1"
 }
+
 variable "http_version" {
+  type        = string
   description = "(Optional) - The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2"
   default     = "http2"
 }
 
 variable "is_ipv6_enabled" {
+  type        = string
   default     = "true"
   description = "State of CloudFront IPv6"
 }
-variable "comment" {
-  default     = "Managed by Clouddrove"
-  description = "Comment for the origin access identity"
-}
 
+variable "comment" {
+  type        = string
+  description = "Comment for the origin access identity"
+  default     = "Managed by Clouddrove"
+}
 
 variable "enabled" {
+  type        = string
+  description = "Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created"
   default     = "true"
-  description = "Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created."
 }
-
-
-variable "origin_bucket" {
-  default     = ""
-  description = "Name of S3 bucket"
-}
-
 
 variable "origin_force_destroy" {
-  default     = "false"
+  type        = string
   description = "Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`)"
+  default     = "false"
+
 }
 
-variable "bucket_domain_format" {
-  default     = "s3.amazonaws.com"
-  description = "Format of bucket domain name"
-}
-
-
-
-variable "cors_allowed_headers" {
-  type        = "list"
-  default     = ["*"]
-  description = "List of allowed headers for S3 bucket"
-}
-
-
-variable "parent_zone_id" {
-  default     = ""
-  description = "ID of the hosted zone to contain this record  (or specify `parent_zone_name`)"
-}
-
-variable "parent_zone_name" {
-  default     = ""
-  description = "Name of the hosted zone to contain this record (or specify `parent_zone_id`)"
-}
-
-
-
-variable "custom_error_response" {
-  # http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/custom-error-pages.html#custom-error-pages-procedure
-  # https://www.terraform.io/docs/providers/aws/r/cloudfront_distribution.html#custom-error-response-arguments
-  description = "List of one or more custom error response element maps"
-
-  type    = "list"
-  default = []
-}
 variable "trusted_signers" {
-  type =  "list"
+  type        = list(string)
   description = "(Optional) - The AWS accounts, if any, that you want to allow to create signed URLs for private content."
-  default = []
+  default     = null
 }
+
+variable "default_root_object" {
+  description = "Object that CloudFront return when requests the root URL"
+  default     = "index.html"
+}
+
+variable "ssl_support_method" {
+  type        = string
+  description = "Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only`"
+  default     = "sni-only"
+}
+
+variable "forward_cookies_whitelisted_names" {
+  type        = list
+  description = "List of forwarded cookie names"
+  default     = []
+}
+
+variable "error_code" {
+  type        = string
+  description = "List of forwarded cookie names"
+  default     = "404"
+}
+
+variable "response_page_path" {
+  type        = string
+  description = "The path of the custom error page (for example, /custom_404.html)"
+  default     = null
+}
+
+variable "public_key_enable" {
+  description = "Public key enable or disable"
+  default     = "false"
+}
+
+variable "public_key" {
+  type        = string
+  description = "he encoded public key that you want to add to CloudFront to use with features like field-level encryption"
+  default     = "false"
+}
+
+
+
