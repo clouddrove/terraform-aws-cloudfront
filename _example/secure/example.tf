@@ -29,7 +29,8 @@ module "acm" {
 }
 
 module "cdn" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+  // source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+  source = "./../../"
 
   name        = "secure-cdn"
   application = "clouddrove"
@@ -45,7 +46,7 @@ module "cdn" {
 
   trusted_signers   = ["self"]
   public_key_enable = "true"
-  public_key        = "./../cdn.pem"
+  public_key        = "./cdn.pem"
 
 }
 

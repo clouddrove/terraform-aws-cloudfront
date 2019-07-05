@@ -23,7 +23,7 @@ badges:
 #  Related Projects of this project
 related:
   - name: "terraform-aws-s3"
-    description: "Please insert description of demo here."
+    description: "Terraform module to creates a s3 bucket with support of versioning, encryption, ACL."
     url: "https://github.com/clouddrove/terraform-aws-s3"
 
 #  description of this project

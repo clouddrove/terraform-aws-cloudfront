@@ -24,6 +24,7 @@ locals {
 # Module      : CLOUDFRONT DISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
 resource "aws_cloudfront_distribution" "default" {
+  count               = var.enabled == "true" ? 1 : 0
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
   comment             = var.comment

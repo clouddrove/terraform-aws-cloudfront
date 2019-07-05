@@ -1,33 +1,44 @@
 # Module      : CLOUDFRONT DISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
+
 output "id" {
-  value       = aws_cloudfront_distribution.default.id
-  description = "ID of AWS CloudFront distribution"
+  description = "The identifier for the distribution. For example"
+  value = concat(
+    aws_cloudfront_distribution.default.*.id
+  )
 }
 
 output "arn" {
-  value       = aws_cloudfront_distribution.default.arn
-  description = "ARN of AWS CloudFront distribution"
+  description = "The ARN (Amazon Resource Name) for the distribution. For example"
+  value = concat(
+    aws_cloudfront_distribution.default.*.arn
+  )
 }
 
 output "status" {
-  value       = aws_cloudfront_distribution.default.status
-  description = "Current status of the distribution"
+  description = "The current status of the distribution"
+  value = concat(
+    aws_cloudfront_distribution.default.*.status
+  )
 }
 
 output "domain_name" {
-  value       = aws_cloudfront_distribution.default.domain_name
-  description = "Domain name corresponding to the distribution"
+  description = " The domain name corresponding to the distribution. For example"
+  value = concat(
+    aws_cloudfront_distribution.default.*.domain_name
+  )
 }
-
 output "etag" {
-  value       = aws_cloudfront_distribution.default.etag
-  description = "Current version of the distribution's information"
+  description = "The current version of the distribution's information. For example"
+  value = concat(
+    aws_cloudfront_distribution.default.*.etag
+  )
 }
-
 output "hosted_zone_id" {
-  value       = aws_cloudfront_distribution.default.hosted_zone_id
-  description = "CloudFront Route 53 zone ID"
+  description = "The CloudFront Route 53 zone ID that can be used to route an Alias Resource Record Set to"
+  value = concat(
+    aws_cloudfront_distribution.default.*.hosted_zone_id
+  )
 }
 
 # Module      : CLOUDFRONT PUBLIC KEY

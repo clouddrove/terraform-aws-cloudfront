@@ -25,7 +25,7 @@ module "acm" {
 
   domain_name          = "clouddrove.com"
   validation_method    = "EMAIL"
-  validate_certificate = false
+  validate_certificate = true
 }
 
 module "cdn" {
@@ -33,9 +33,9 @@ module "cdn" {
 
   name        = "basic-cdn"
   application = "clouddrove"
-  environment = "test"
   label_order = ["environment", "name", "application"]
 
+  environment            = "test"
   aliases                = ["clouddrove.com"]
   bucket_name            = module.s3_bucket.s3_default_id[0]
   viewer_protocol_policy = "redirect-to-https"

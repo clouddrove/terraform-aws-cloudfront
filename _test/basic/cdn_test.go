@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+
+
 func TestCDN(t *testing.T) {
 	t.Parallel()
 
@@ -19,7 +21,7 @@ func TestCDN(t *testing.T) {
 	terraformOptions := &terraform.Options{
 
 		// Source path of Terraform directory.
-		TerraformDir: "../_example/basic",
+		TerraformDir: "../../_example/basic",
 
 	}
 
@@ -28,9 +30,11 @@ func TestCDN(t *testing.T) {
 
 	// At the end of the test, run `terraform destroy` to clean up any resources that were created
 	defer terraform.Destroy(t, terraformOptions)
-
 	// Run `terraform output` to get the value of an output variable
 
+	arn := terraform.OutputList(t, terraformOptions, "arn")
 
+	// Verify we're getting back the outputs we expect
+	assert.Contains(t, arn, "arn:aws:cloudfront")
 
 }

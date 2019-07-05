@@ -143,6 +143,65 @@ Include this repository as a module in your existing terraform code:
 
 
 
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| acm_certificate_arn | Existing ACM Certificate ARN | string | `` | no |
+| aliases | List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront | list(string) | `<list>` | no |
+| allowed_methods | List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront | list(string) | `<list>` | no |
+| application | Application (e.g. `cp` or `clouddrove`) | string | - | yes |
+| attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
+| bucket_domain_name | The DNS domain name of either the S3 bucket, or web site of your custom origin | string | `` | no |
+| bucket_name | A unique identifier for the origin | string | `` | no |
+| cached_methods | List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD) | list(string) | `<list>` | no |
+| comment | Comment for the origin access identity | string | `Managed by Clouddrove` | no |
+| compress | Compress content for web requests that include Accept-Encoding: gzip in the request header | string | `` | no |
+| default_root_object | Object that CloudFront return when requests the root URL | string | `index.html` | no |
+| default_ttl | Default amount of time (in seconds) that an object is in a CloudFront cache | string | `60` | no |
+| enabled | Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created | string | `true` | no |
+| environment | Environment (e.g. `prod`, `dev`, `staging`) | string | - | yes |
+| error_code | List of forwarded cookie names | string | `404` | no |
+| forward_cookies | Time in seconds that browser can cache the response for S3 bucket | string | `none` | no |
+| forward_cookies_whitelisted_names | List of forwarded cookie names | list | `<list>` | no |
+| forward_header_values | A list of whitelisted header values to forward to the origin | list(string) | `<list>` | no |
+| forward_query_string | Forward query strings to the origin that is associated with this cache behavior | string | `false` | no |
+| geo_restriction_locations | List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist) | list(string) | `<list>` | no |
+| geo_restriction_type | Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist` | string | `none` | no |
+| http_version | (Optional) - The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2 | string | `http2` | no |
+| is_ipv6_enabled | State of CloudFront IPv6 | string | `true` | no |
+| label_order | label order, e.g. `name`,`application` | list | `<list>` | no |
+| max_ttl | Maximum amount of time (in seconds) that an object is in a CloudFront cache | string | `31536000` | no |
+| min_ttl | Minimum amount of time that you want objects to stay in CloudFront caches | string | `0` | no |
+| minimum_protocol_version | Cloudfront TLS minimum protocol version | string | `TLSv1` | no |
+| name | Name  (e.g. `app` or `cluster`) | string | - | yes |
+| origin_force_destroy | Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`) | string | `false` | no |
+| origin_path | An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path. | string | `` | no |
+| price_class | Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100` | string | `PriceClass_100` | no |
+| public_key | he encoded public key that you want to add to CloudFront to use with features like field-level encryption | string | `false` | no |
+| public_key_enable | Public key enable or disable | string | `false` | no |
+| response_page_path | The path of the custom error page (for example, /custom_404.html) | string | `` | no |
+| smooth_streaming | (Optional) - Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior | string | `false` | no |
+| ssl_support_method | Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only` | string | `sni-only` | no |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | map(string) | `<map>` | no |
+| trusted_signers | (Optional) - The AWS accounts, if any, that you want to allow to create signed URLs for private content. | list(string) | `<list>` | no |
+| viewer_protocol_policy | allow-all, redirect-to-https | string | `` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| access_identity_etag | ID of AWS CloudFront distribution |
+| access_identity_id | ID of AWS CloudFront distribution |
+| arn | ARN of AWS CloudFront distribution |
+| domain_name | Domain name corresponding to the distribution |
+| etag | Current version of the distribution's information |
+| hosted_zone_id | CloudFront Route 53 zone ID |
+| id | ID of AWS CloudFront distribution |
+| pubkey_etag | Current version of the distribution's information |
+| pubkey_id | ID of AWS CloudFront distribution |
+| status | Current status of the distribution |
+
 ## Makefile Targets
 ```
 Available targets:
@@ -163,7 +222,7 @@ Like this project? Please give it a ★ on [our GitHub](https://github.com/cloud
 
 Check out these related projects.
 
-- [terraform-aws-s3](https://github.com/clouddrove/terraform-aws-s3) - Please insert description of demo here.
+- [terraform-aws-s3](https://github.com/clouddrove/terraform-aws-s3) - Terraform module to creates a s3 bucket with support of versioning, encryption, ACL.
 
 
 

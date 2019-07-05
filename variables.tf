@@ -187,7 +187,7 @@ variable "origin_force_destroy" {
 variable "trusted_signers" {
   type        = list(string)
   description = "(Optional) - The AWS accounts, if any, that you want to allow to create signed URLs for private content."
-  default     = null
+  default     = []
 }
 
 variable "default_root_object" {
@@ -216,7 +216,7 @@ variable "error_code" {
 variable "response_page_path" {
   type        = string
   description = "The path of the custom error page (for example, /custom_404.html)"
-  default     = null
+  default     = ""
 }
 
 variable "public_key_enable" {
@@ -227,7 +227,7 @@ variable "public_key_enable" {
 variable "public_key" {
   type        = string
   description = "he encoded public key that you want to add to CloudFront to use with features like field-level encryption"
-  default     = "false"
+  default     = ""
 }
 
 
