@@ -25,23 +25,29 @@ module "acm" {
 
   domain_name          = "clouddrove.com"
   validation_method    = "EMAIL"
-  validate_certificate = true
+  validate_certificate = false
 }
 
 module "cdn" {
   source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
 
-  name        = "basic-cdn"
+  name        = "secure-cdn"
   application = "clouddrove"
+  environment = "test"
   label_order = ["environment", "name", "application"]
 
-  environment            = "test"
+  enabled_bucket         = "true"
   aliases                = ["clouddrove.com"]
   bucket_name            = module.s3_bucket.s3_default_id[0]
   viewer_protocol_policy = "redirect-to-https"
   compress               = "false"
   allowed_methods        = ["GET", "HEAD"]
   acm_certificate_arn    = module.acm.arn[0]
+
+  trusted_signers   = ["self"]
+  public_key_enable = "true"
+  public_key        = "./cdn.pem"
+
 }
 
 

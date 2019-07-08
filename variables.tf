@@ -47,11 +47,6 @@ variable "bucket_name" {
   default     = ""
 }
 
-variable "bucket_domain_name" {
-  type        = string
-  description = "The DNS domain name of either the S3 bucket, or web site of your custom origin"
-  default     = ""
-}
 
 variable "origin_path" {
   description = "An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path."
@@ -176,6 +171,17 @@ variable "enabled" {
   description = "Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created"
   default     = "true"
 }
+variable "enabled_bucket" {
+  type        = string
+  description = "If cdn create with s3 bucket"
+  default     = "false"
+
+}
+variable "custom_domain" {
+  type        = string
+  description = "If cdn create with custom Domain"
+  default     = "false"
+}
 
 variable "origin_force_destroy" {
   type        = string
@@ -230,5 +236,42 @@ variable "public_key" {
   default     = ""
 }
 
+variable "origin_http_port" {
+  description = "(Required) - The HTTP port the custom origin listens on"
+  default     = "80"
+}
 
+variable "origin_https_port" {
+  description = "(Required) - The HTTPS port the custom origin listens on"
+  default     = "443"
+}
 
+variable "origin_protocol_policy" {
+  description = "(Required) - The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer"
+  default     = "match-viewer"
+}
+
+variable "origin_ssl_protocols" {
+  description = "(Required) - The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS"
+  type        = "list"
+  default     = ["TLSv1", "TLSv1.1", "TLSv1.2"]
+}
+
+variable "origin_keepalive_timeout" {
+  description = "(Optional) The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
+  default     = "60"
+}
+
+variable "origin_read_timeout" {
+  description = "(Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
+  default     = "60"
+}
+variable "domain_name" {
+  description = "(Required) - The DNS domain name of your custom origin (e.g. clouddrove.com)"
+  default     = ""
+}
+
+variable "web_acl_id" {
+  description = "(Optional) - Web ACL ID that can be attached to the Cloudfront distribution"
+  default     = ""
+}
