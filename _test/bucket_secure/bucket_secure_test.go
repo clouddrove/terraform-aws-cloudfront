@@ -2,16 +2,14 @@
 // Description : This Terratest is used to test the Terraform VPC module.
 // Copyright @ CloudDrove. All Right Reserved.
 
-package test
+package secure
 
 import (
+	"github.com/stretchr/testify/assert"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
-	"github.com/stretchr/testify/assert"
 )
-
-
 
 func TestCDN(t *testing.T) {
 	t.Parallel()
@@ -21,8 +19,7 @@ func TestCDN(t *testing.T) {
 	terraformOptions := &terraform.Options{
 
 		// Source path of Terraform directory.
-		TerraformDir: "../../_example/basic",
-
+		TerraformDir: "../../_example/secure-basic",
 	}
 
 	// This will run `terraform init` and `terraform apply` and fail the test if there are any errors
@@ -36,5 +33,4 @@ func TestCDN(t *testing.T) {
 
 	// Verify we're getting back the outputs we expect
 	assert.Contains(t, arn, "arn:aws:cloudfront")
-
 }

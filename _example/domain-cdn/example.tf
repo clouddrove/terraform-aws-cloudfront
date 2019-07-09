@@ -1,19 +1,6 @@
 provider "aws" {
   region = "us-east-1"
 }
-module "s3_bucket" {
-  source = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-
-  name        = "secure-bucket-cdn"
-  region      = "us-east-1"
-  application = "clouddrove"
-  environment = "test"
-  label_order = ["environment", "name", "application"]
-
-  versioning     = true
-  acl            = "private"
-  bucket_enabled = true
-}
 
 module "acm" {
   source = "git::https://github.com/clouddrove/terraform-aws-acm.git"
@@ -36,13 +23,13 @@ module "cdn" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
-  enabled_bucket         = "true"
-  aliases                = ["clouddrove.com"]
-  bucket_name            = module.s3_bucket.s3_default_id[0]
-  viewer_protocol_policy = "redirect-to-https"
+  custom_domain          = "true"
   compress               = "false"
+  aliases                = ["clouddrove.com"]
+  domain_name            = "clouddrove.com"
+  viewer_protocol_policy = "redirect-to-https"
   allowed_methods        = ["GET", "HEAD"]
-  acm_certificate_arn    = module.acm.arn[0]
+  acm_certificate_arn    = module.acm.arn
 }
 
 
