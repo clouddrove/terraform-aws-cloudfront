@@ -47,7 +47,6 @@ variable "bucket_name" {
   default     = ""
 }
 
-
 variable "origin_path" {
   description = "An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path."
   default     = ""
@@ -266,6 +265,7 @@ variable "origin_read_timeout" {
   description = "(Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase."
   default     = "60"
 }
+
 variable "domain_name" {
   description = "(Required) - The DNS domain name of your custom origin (e.g. clouddrove.com)"
   default     = ""

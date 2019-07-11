@@ -1,6 +1,7 @@
 provider "aws" {
   region = "us-east-1"
 }
+
 module "s3_bucket" {
   source = "git::https://github.com/clouddrove/terraform-aws-s3.git"
 
@@ -47,7 +48,6 @@ module "cdn" {
   trusted_signers   = ["self"]
   public_key_enable = "true"
   public_key        = "./cdn.pem"
-
 }
 
 

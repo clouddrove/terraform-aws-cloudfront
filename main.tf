@@ -94,7 +94,6 @@ resource "aws_cloudfront_distribution" "domain" {
   aliases             = var.aliases
   default_root_object = var.default_root_object
 
-
   origin {
     domain_name = var.domain_name
     origin_id   = module.lables.id

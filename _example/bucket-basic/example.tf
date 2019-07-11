@@ -1,6 +1,7 @@
 provider "aws" {
   region = "us-east-1"
 }
+
 module "s3_bucket" {
   source = "git::https://github.com/clouddrove/terraform-aws-s3.git"
 
@@ -45,5 +46,3 @@ module "cdn" {
   allowed_methods        = ["GET", "HEAD"]
   acm_certificate_arn    = module.acm.arn
 }
-
-
