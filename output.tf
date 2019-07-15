@@ -77,3 +77,8 @@ output "access_identity_etag" {
   value = concat(aws_cloudfront_origin_access_identity.origin_access_identity.*.etag
   )[0]
 }
+
+output "tags" {
+  value       = module.label.tags
+  description = "A mapping of tags to assign to the resource."
+}

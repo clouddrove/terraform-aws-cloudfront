@@ -4,7 +4,6 @@
 # Run `make readme` to rebuild the `README.md`
 #
 
-
 # Name of this project
 name : terraform-aws-cloudfront-cdn
 
@@ -34,12 +33,11 @@ description: |-
 # please not remove these two If you need add more
 include:
   - "terraform.md"
-  - "targets.md"
 
 # How to use this project
 usage : |-
-  ### Basic Example
   Include this repository as a module in your existing terraform code:
+  ### Example1
   ```hcl
         module "s3_bucket" {
           source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
@@ -86,8 +84,7 @@ usage : |-
 
   ```
 
-  ### Secure Example
-  Include this repository as a module in your existing terraform code:
+  ### Example2
   ```hcl
         module "s3_bucket" {
           source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
@@ -137,6 +134,9 @@ usage : |-
   ```
 # Contributors to this project
 contributors:
+  - name: "Kamlesh Bhargav"
+    github: "kamleshbhargav"
+  - name: "Nikita Dugar"
+    github: "nikitadugar"
   - name: "Sohan Yadav"
     github: "sohanyadav"
-

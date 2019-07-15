@@ -10,13 +10,11 @@ Terraform Module that implements a CloudFront Web Distribution (CDN).
 
 ---
 
-This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com) approach towards DevOps.
+This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com) approach towards DevOps. 
 [<img align="right" title="Share on Facebook" src="https://docs.cloudposse.com/images/ionicons/social-facebook-outline-2.0.1-16x16-999999.svg" />][share_facebook]
 [<img align="right" title="Share on LinkedIn" src="https://docs.cloudposse.com/images/ionicons/social-linkedin-outline-2.0.1-16x16-999999.svg" />][share_linkedin]
 [<img align="right" title="Share on Twitter" src="https://docs.cloudposse.com/images/ionicons/social-twitter-outline-2.0.1-16x16-999999.svg" />][share_twitter]
 
-
-[![Terraform Open Source Modules](https://docs.cloudposse.com/images/terraform-open-source-modules.svg)][terraform_modules]
 
 
 
@@ -24,8 +22,6 @@ This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com)
 It's 100% Open Source and licensed under the [MIT](LICENSE).
 
 
-
-We literally have [*hundreds of terraform modules*][terraform_modules] that are Open Source and well-maintained. Check them out!
 
 
 
@@ -36,12 +32,9 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 ## Usage
 
 
-**IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/clouddrove/terraform-aws-cloudfront-cdn/releases).
 
-
-### Basic Example
 Include this repository as a module in your existing terraform code:
+### Example1
 ```hcl
       module "s3_bucket" {
         source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
@@ -88,8 +81,7 @@ Include this repository as a module in your existing terraform code:
 
 ```
 
-### Secure Example
-Include this repository as a module in your existing terraform code:
+### Example2
 ```hcl
       module "s3_bucket" {
         source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
@@ -152,14 +144,16 @@ Include this repository as a module in your existing terraform code:
 | allowed_methods | List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront | list(string) | `<list>` | no |
 | application | Application (e.g. `cp` or `clouddrove`) | string | - | yes |
 | attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
-| bucket_domain_name | The DNS domain name of either the S3 bucket, or web site of your custom origin | string | `` | no |
 | bucket_name | A unique identifier for the origin | string | `` | no |
 | cached_methods | List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD) | list(string) | `<list>` | no |
 | comment | Comment for the origin access identity | string | `Managed by Clouddrove` | no |
 | compress | Compress content for web requests that include Accept-Encoding: gzip in the request header | string | `` | no |
+| custom_domain | If cdn create with custom Domain | string | `false` | no |
 | default_root_object | Object that CloudFront return when requests the root URL | string | `index.html` | no |
 | default_ttl | Default amount of time (in seconds) that an object is in a CloudFront cache | string | `60` | no |
+| domain_name | (Required) - The DNS domain name of your custom origin (e.g. clouddrove.com) | string | `` | no |
 | enabled | Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created | string | `true` | no |
+| enabled_bucket | If cdn create with s3 bucket | string | `false` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`) | string | - | yes |
 | error_code | List of forwarded cookie names | string | `404` | no |
 | forward_cookies | Time in seconds that browser can cache the response for S3 bucket | string | `none` | no |
@@ -176,9 +170,15 @@ Include this repository as a module in your existing terraform code:
 | minimum_protocol_version | Cloudfront TLS minimum protocol version | string | `TLSv1` | no |
 | name | Name  (e.g. `app` or `cluster`) | string | - | yes |
 | origin_force_destroy | Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`) | string | `false` | no |
+| origin_http_port | (Required) - The HTTP port the custom origin listens on | string | `80` | no |
+| origin_https_port | (Required) - The HTTPS port the custom origin listens on | string | `443` | no |
+| origin_keepalive_timeout | (Optional) The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | string | `60` | no |
 | origin_path | An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path. | string | `` | no |
+| origin_protocol_policy | (Required) - The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer | string | `match-viewer` | no |
+| origin_read_timeout | (Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | string | `60` | no |
+| origin_ssl_protocols | (Required) - The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS | list | `<list>` | no |
 | price_class | Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100` | string | `PriceClass_100` | no |
-| public_key | he encoded public key that you want to add to CloudFront to use with features like field-level encryption | string | `false` | no |
+| public_key | he encoded public key that you want to add to CloudFront to use with features like field-level encryption | string | `` | no |
 | public_key_enable | Public key enable or disable | string | `false` | no |
 | response_page_path | The path of the custom error page (for example, /custom_404.html) | string | `` | no |
 | smooth_streaming | (Optional) - Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior | string | `false` | no |
@@ -186,6 +186,7 @@ Include this repository as a module in your existing terraform code:
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | map(string) | `<map>` | no |
 | trusted_signers | (Optional) - The AWS accounts, if any, that you want to allow to create signed URLs for private content. | list(string) | `<list>` | no |
 | viewer_protocol_policy | allow-all, redirect-to-https | string | `` | no |
+| web_acl_id | (Optional) - Web ACL ID that can be attached to the Cloudfront distribution | string | `` | no |
 
 ## Outputs
 
@@ -193,30 +194,21 @@ Include this repository as a module in your existing terraform code:
 |------|-------------|
 | access_identity_etag | ID of AWS CloudFront distribution |
 | access_identity_id | ID of AWS CloudFront distribution |
-| arn | ARN of AWS CloudFront distribution |
-| domain_name | Domain name corresponding to the distribution |
-| etag | Current version of the distribution's information |
-| hosted_zone_id | CloudFront Route 53 zone ID |
-| id | ID of AWS CloudFront distribution |
+| arn | The ARN (Amazon Resource Name) for the distribution. For example |
+| domain_name | The domain name corresponding to the distribution. For example |
+| etag | The current version of the distribution's information. For example |
+| hosted_zone_id | The CloudFront Route 53 zone ID that can be used to route an Alias Resource Record Set to |
+| id | The identifier for the distribution. For example |
 | pubkey_etag | Current version of the distribution's information |
 | pubkey_id | ID of AWS CloudFront distribution |
-| status | Current status of the distribution |
-
-## Makefile Targets
-```
-Available targets:
-
-  help                                Help screen
-  help/all                            Display help for all targets
-  help/short                          This help short screen
-
-```
+| status | The current status of the distribution |
 
 
 
-## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudfront-cdn)! (it helps us **a lot**)
+## Share the Love 
+
+Like this project? Please give it a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudfront-cdn)! (it helps us **a lot**) 
 
 ## Related Projects
 
@@ -246,7 +238,7 @@ Copyright © [CloudDrove](https://clouddrove.com). All Right Reserved.
 
 
 
-## License
+## License 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -287,15 +279,19 @@ Check out [our other projects][github], [follow us on twitter][twitter] to help 
 
 ### Contributors
 
-|  [![Sohan Yadav][sohanyadav_avatar]][sohanyadav_homepage]<br/>[Sohan Yadav][sohanyadav_homepage] |
-|---|
+|  [![Kamlesh Bhargav][kamleshbhargav_avatar]][kamleshbhargav_homepage]<br/>[Kamlesh Bhargav][kamleshbhargav_homepage] | [![Nikita Dugar][nikitadugar_avatar]][nikitadugar_homepage]<br/>[Nikita Dugar][nikitadugar_homepage] | [![Sohan Yadav][sohanyadav_avatar]][sohanyadav_homepage]<br/>[Sohan Yadav][sohanyadav_homepage] |
+|---|---|---|
 
+  [kamleshbhargav_homepage]: https://github.com/kamleshbhargav
+  [kamleshbhargav_avatar]: https://github.com/kamleshbhargav.png?size=150
+  [nikitadugar_homepage]: https://github.com/nikitadugar
+  [nikitadugar_avatar]: https://github.com/nikitadugar.png?size=150
   [sohanyadav_homepage]: https://github.com/sohanyadav
   [sohanyadav_avatar]: https://github.com/sohanyadav.png?size=150
 
 
 
-  [logo]: https://clouddrove.com/images/logo.png
+  [logo]: https://clouddrove.com/media/images/logo.png
   [website]: https://clouddrove.com
   [github]: https://github.com/clouddrove
   [linkedin]: https://cpco.io/linkedin
