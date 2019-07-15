@@ -4,6 +4,6 @@ output "id" {
 }
 
 output "tags" {
-  value       = module.acm.tags
+  value       = module.cdn.tags
   description = "A mapping of tags to assign to the CDN."
 }
