@@ -27,6 +27,6 @@ func TestCDN(t *testing.T) {
 	Tags := terraform.OutputMap(t, terraformOptions, "tags")
 
 	// Check that we get back the outputs that we expect
-	assert.Equal(t, "test-certificate-clouddrove", Tags["Name"])
+	assert.Equal(t, "test-secure-bucket-cdn-clouddrove", Tags["Name"])
 	assert.Contains(t, Arn, "arn:aws:cloudfront")
 }
