@@ -1,0 +1,142 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name : terraform-aws-cloudfront-cdn
+
+# License of this project
+license: "MIT"
+
+# Canonical GitHub repo
+github_repo: clouddrove/terraform-aws-cloudfront-cdn
+
+# Badges to display
+badges:
+  - name: "Build Status"
+    image: "https://img.shields.io/badge/build-passing-green.svg"
+    url: "https://travis-ci.org/cloudposse/terraform-aws-vpc"
+
+#  Related Projects of this project
+related:
+  - name: "terraform-aws-s3"
+    description: "Terraform module to creates a s3 bucket with support of versioning, encryption, ACL."
+    url: "https://github.com/clouddrove/terraform-aws-s3"
+
+#  description of this project
+description: |-
+  Terraform Module that implements a CloudFront Web Distribution (CDN).
+
+# extra content
+# please not remove these two If you need add more
+include:
+  - "terraform.md"
+
+# How to use this project
+usage : |-
+  Include this repository as a module in your existing terraform code:
+  ### Example1
+  ```hcl
+        module "s3_bucket" {
+          source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
+
+          name           = "secure-bucket-cdn"
+          region         = "us-east-1"
+          application    = "clouddrove"
+          environment    = "test"
+          label_order    = ["environment", "name", "application"]
+
+          versioning     = true
+          acl            = "private"
+          bucket_enabled = true
+        }
+
+        module "acm" {
+          source               = "git::https://github.com/clouddrove/terraform-aws-acm.git"
+
+          name                 = "certificate"
+          application          = "clouddrove"
+          environment          = "test"
+          label_order          = ["environment", "name", "application"]
+
+          domain_name          = "clouddrove.com"
+          validation_method    = "EMAIL"
+          validate_certificate = false
+        }
+
+        module "cdn" {
+          source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+
+          name        = "basic-cdn"
+          application = "clouddrove"
+          label_order = ["environment", "name", "application"]
+
+          environment            = "test"
+          aliases                = ["clouddrove.com"]
+          bucket_name            = module.s3_bucket.s3_default_id[0]
+          viewer_protocol_policy = "redirect-to-https"
+          compress               = "false"
+          allowed_methods        = ["GET", "HEAD"]
+          acm_certificate_arn    = module.acm.arn[0]
+        }
+
+  ```
+
+  ### Example2
+  ```hcl
+        module "s3_bucket" {
+          source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
+
+          name           = "secure-bucket-cdn"
+          region         = "us-east-1"
+          application    = "clouddrove"
+          environment    = "test"
+          label_order    = ["environment", "name", "application"]
+
+          versioning     = true
+          acl            = "private"
+          bucket_enabled = true
+        }
+
+        module "acm" {
+          source               = "git::https://github.com/clouddrove/terraform-aws-acm.git"
+          name                 = "certificate"
+          application          = "clouddrove"
+          environment          = "test"
+          label_order          = ["environment", "name", "application"]
+
+          domain_name          = "clouddrove.com"
+          validation_method    = "EMAIL"
+          validate_certificate = false
+        }
+
+        module "cdn" {
+          source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+
+          name        = "basic-cdn"
+          application = "clouddrove"
+          environment = "test"
+          label_order = ["environment", "name", "application"]
+
+          aliases                = ["clouddrove.com"]
+          bucket_name            = module.s3_bucket.s3_default_id[0]
+          viewer_protocol_policy = "redirect-to-https"
+          compress               = "false"
+          allowed_methods        = ["GET", "HEAD"]
+          acm_certificate_arn    = module.acm.arn[0]
+          trusted_signers        = ["self"]
+          public_key_enable      = "true"
+          public_key             = "./../cdn.pem"
+        }
+
+  ```
+# Contributors to this project
+contributors:
+  - name: "Kamlesh Bhargav"
+    github: "kamleshbhargav"
+  - name: "Nikita Dugar"
+    github: "nikitadugar"
+  - name: "Sohan Yadav"
+    github: "sohanyadav"
