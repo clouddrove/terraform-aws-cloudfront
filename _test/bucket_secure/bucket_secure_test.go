@@ -9,13 +9,13 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 )
 
-func TestCDN(t *testing.T) {
+func Test(t *testing.T) {
 	t.Parallel()
 	terraformOptions := &terraform.Options{
 		// Source path of Terraform directory.
 		TerraformDir: "../../_example/secure-basic",
 	}
-	
+
 	// This will run 'terraform init' and 'terraform application' and will fail the test if any errors occur
 	terraform.InitAndApply(t, terraformOptions)
 

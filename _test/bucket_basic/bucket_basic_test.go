@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCDN(t *testing.T) {
+func Test(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
