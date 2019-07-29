@@ -185,13 +185,13 @@ variable "enabled" {
 variable "enabled_bucket" {
   type        = bool
   default     = false
-  description = "If cdn create with s3 bucket"
+  description = "If cdn create with s3 bucket."
 }
 
 variable "custom_domain" {
   type        = bool
   default     = false
-  description = "If cdn create with custom Domain"
+  description = "If cdn create with custom Domain."
 }
 
 variable "origin_force_destroy" {
@@ -231,7 +231,7 @@ variable "error_code" {
 }
 
 variable "response_page_path" {
-  type        = bool
+  type        = string
   default     = null
   description = "The path of the custom error page (for example, /custom_404.html)."
 }
