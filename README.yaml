@@ -71,7 +71,7 @@ usage : |-
           aliases                = ["clouddrove.com"]
           bucket_name            = module.s3_bucket.s3_default_id[0]
           viewer_protocol_policy = "redirect-to-https"
-          compress               = "false"
+          compress               = false
           allowed_methods        = ["GET", "HEAD"]
           acm_certificate_arn    = module.acm.arn[0]
         }
@@ -112,11 +112,11 @@ usage : |-
           aliases                = ["clouddrove.com"]
           bucket_name            = module.s3_bucket.s3_default_id[0]
           viewer_protocol_policy = "redirect-to-https"
-          compress               = "false"
+          compress               = false
           allowed_methods        = ["GET", "HEAD"]
           acm_certificate_arn    = module.acm.arn[0]
           trusted_signers        = ["self"]
-          public_key_enable      = "true"
+          public_key_enable      = true
           public_key             = "./../cdn.pem"
         }
 
