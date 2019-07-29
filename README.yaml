@@ -69,9 +69,9 @@ usage : |-
         module "cdn" {
           source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
 
-          name        = "basic-cdn"
-          application = "clouddrove"
-          label_order = ["environment", "name", "application"]
+          name                   = "basic-cdn"
+          application            = "clouddrove"
+          label_order            = ["environment", "name", "application"]
 
           environment            = "test"
           aliases                = ["clouddrove.com"]
@@ -88,7 +88,6 @@ usage : |-
   ```hcl
         module "s3_bucket" {
           source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-
           name           = "secure-bucket-cdn"
           region         = "us-east-1"
           application    = "clouddrove"
@@ -106,7 +105,6 @@ usage : |-
           application          = "clouddrove"
           environment          = "test"
           label_order          = ["environment", "name", "application"]
-
           domain_name          = "clouddrove.com"
           validation_method    = "EMAIL"
           validate_certificate = false
@@ -114,12 +112,10 @@ usage : |-
 
         module "cdn" {
           source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
-
-          name        = "basic-cdn"
-          application = "clouddrove"
-          environment = "test"
-          label_order = ["environment", "name", "application"]
-
+          name                   = "basic-cdn"
+          application            = "clouddrove"
+          environment            = "test"
+          label_order            = ["environment", "name", "application"]
           aliases                = ["clouddrove.com"]
           bucket_name            = module.s3_bucket.s3_default_id[0]
           viewer_protocol_policy = "redirect-to-https"
