@@ -36,7 +36,6 @@ resource "aws_cloudfront_distribution" "bucket" {
   default_root_object = var.default_root_object
 
   origin {
-
     domain_name = format("%s.s3.amazonaws.com", var.bucket_name)
     origin_id   = local.s3_origin_id
     origin_path = var.origin_path
