@@ -11,10 +11,9 @@ module "s3_bucket" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
+  versioning     = true
   acl            = "private"
   bucket_enabled = true
-  versioning     = true
-
 }
 
 module "acm" {

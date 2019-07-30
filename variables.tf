@@ -243,8 +243,8 @@ variable "public_key_enable" {
 }
 
 variable "public_key" {
-  type        = bool
-  default     = false
+  type        = string
+  default     = ""
   description = "he encoded public key that you want to add to CloudFront to use with features like field-level encryption."
 }
 

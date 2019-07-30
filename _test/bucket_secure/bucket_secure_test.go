@@ -13,7 +13,7 @@ func Test(t *testing.T) {
 	t.Parallel()
 	terraformOptions := &terraform.Options{
 		// Source path of Terraform directory.
-		TerraformDir: "../../_example/secure-basic",
+		TerraformDir: "../../_example/bucket-secure",
 	}
 
 	// This will run 'terraform init' and 'terraform application' and will fail the test if any errors occur
@@ -27,6 +27,6 @@ func Test(t *testing.T) {
 	Tags := terraform.OutputMap(t, terraformOptions, "tags")
 
 	// Check that we get back the outputs that we expect
-	assert.Equal(t, "test-secure-bucket-cdn-clouddrove", Tags["Name"])
+	assert.Equal(t, "test-secure-cdn-clouddrove", Tags["Name"])
 	assert.Contains(t, Arn, "arn:aws:cloudfront")
 }
