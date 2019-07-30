@@ -15,9 +15,8 @@ module "lables" {
 # Module      : CLOUDFRONT ORIGIN ACCESS IDENENTITY
 # Description : Creates an Amazon CloudFront origin access identity
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
-  count = var.enabled_bucket == true ? 1 : 0
-
-  comment = "access-identity-${var.bucket_name}.s3.amazonaws.com"
+  count   = var.enabled_bucket == true ? 1 : 0
+  comment = format("access-identity-%s.s3.amazonaws.com", var.bucket_name)
 }
 
 locals {
@@ -37,7 +36,8 @@ resource "aws_cloudfront_distribution" "bucket" {
   default_root_object = var.default_root_object
 
   origin {
-    domain_name = "${var.bucket_name}.s3.amazonaws.com"
+
+    domain_name = format("%s.s3.amazonaws.com", var.bucket_name)
     origin_id   = local.s3_origin_id
     origin_path = var.origin_path
 
