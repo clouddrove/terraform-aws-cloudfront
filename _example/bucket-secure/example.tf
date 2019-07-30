@@ -30,7 +30,7 @@ module "acm" {
 }
 
 module "cdn" {
-  source = "./../../"
+  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
 
   name        = "secure-cdn"
   application = "clouddrove"
