@@ -4,8 +4,8 @@
 
 #Module      : label
 #Description : Terraform module to create consistent naming for multiple names.
-module "lables" {
-  source = "git::https://github.com/clouddrove/terraform-lables.git"
+module "labels" {
+  source = "git::https://github.com/clouddrove/terraform-labels.git"
 
   name        = var.name
   application = var.application
@@ -87,7 +87,7 @@ resource "aws_cloudfront_distribution" "bucket" {
     response_page_path = var.response_page_path
   }
 
-  tags = module.lables.tags
+  tags = module.labels.tags
 }
 
 # Module      : CLOUDFRONT CussDISTRIBUSTION
@@ -104,7 +104,7 @@ resource "aws_cloudfront_distribution" "domain" {
 
   origin {
     domain_name = var.domain_name
-    origin_id   = module.lables.id
+    origin_id   = module.labels.id
     origin_path = var.origin_path
 
     custom_origin_config {
@@ -125,7 +125,7 @@ resource "aws_cloudfront_distribution" "domain" {
   }
 
   default_cache_behavior {
-    target_origin_id = module.lables.id
+    target_origin_id = module.labels.id
     allowed_methods  = var.allowed_methods
     cached_methods   = var.cached_methods
     compress         = var.compress
@@ -160,7 +160,7 @@ resource "aws_cloudfront_distribution" "domain" {
     response_page_path = var.response_page_path
   }
 
-  tags = module.lables.tags
+  tags = module.labels.tags
 }
 
 # Module      : CLOUDFRONT PUBLIC KEY
@@ -170,5 +170,5 @@ resource "aws_cloudfront_public_key" "default" {
 
   comment     = var.comment
   encoded_key = file(var.public_key)
-  name        = module.lables.id
+  name        = module.labels.id
 }
