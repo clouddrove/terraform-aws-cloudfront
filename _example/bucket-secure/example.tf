@@ -37,8 +37,8 @@ module "cdn" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
-  enabled_bucket         = "true"
-  compress               = "false"
+  enabled_bucket         = true
+  compress               = false
   aliases                = ["clouddrove.com"]
   bucket_name            = module.s3_bucket.id
   viewer_protocol_policy = "redirect-to-https"
@@ -46,7 +46,7 @@ module "cdn" {
   acm_certificate_arn    = module.acm.arn
 
   trusted_signers   = ["self"]
-  public_key_enable = "true"
+  public_key_enable = true
   public_key        = "./cdn.pem"
 }
 

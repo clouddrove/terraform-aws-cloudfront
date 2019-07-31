@@ -10,11 +10,13 @@ Terraform Module that implements a CloudFront Web Distribution (CDN).
 
 ---
 
-This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com) approach towards DevOps. 
+This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com) approach towards DevOps.
 [<img align="right" title="Share on Facebook" src="https://docs.cloudposse.com/images/ionicons/social-facebook-outline-2.0.1-16x16-999999.svg" />][share_facebook]
 [<img align="right" title="Share on LinkedIn" src="https://docs.cloudposse.com/images/ionicons/social-linkedin-outline-2.0.1-16x16-999999.svg" />][share_linkedin]
 [<img align="right" title="Share on Twitter" src="https://docs.cloudposse.com/images/ionicons/social-twitter-outline-2.0.1-16x16-999999.svg" />][share_twitter]
 
+
+[![Terraform Open Source Modules](https://docs.cloudposse.com/images/terraform-open-source-modules.svg)][terraform_modules]
 
 
 
@@ -22,6 +24,8 @@ This project is part of our comprehensive ["Clouddrove"](https://clouddrove.com)
 It's 100% Open Source and licensed under the [MIT](LICENSE).
 
 
+
+We literally have [*hundreds of terraform modules*][terraform_modules] that are Open Source and well-maintained. Check them out!
 
 
 
@@ -32,19 +36,20 @@ It's 100% Open Source and licensed under the [MIT](LICENSE).
 ## Usage
 
 
+**IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/clouddrove/terraform-aws-cloudfront-cdn/releases).
+
 
 Include this repository as a module in your existing terraform code:
 ### Example1
 ```hcl
       module "s3_bucket" {
         source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-
         name           = "secure-bucket-cdn"
         region         = "us-east-1"
         application    = "clouddrove"
         environment    = "test"
         label_order    = ["environment", "name", "application"]
-
         versioning     = true
         acl            = "private"
         bucket_enabled = true
@@ -52,46 +57,39 @@ Include this repository as a module in your existing terraform code:
 
       module "acm" {
         source               = "git::https://github.com/clouddrove/terraform-aws-acm.git"
-
         name                 = "certificate"
         application          = "clouddrove"
         environment          = "test"
         label_order          = ["environment", "name", "application"]
-
         domain_name          = "clouddrove.com"
         validation_method    = "EMAIL"
-        validate_certificate = false
+        validate_certificate = true
       }
 
       module "cdn" {
         source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
-
-        name        = "basic-cdn"
-        application = "clouddrove"
-        label_order = ["environment", "name", "application"]
-
+        name                   = "basic-cdn"
+        application            = "clouddrove"
+        label_order            = ["environment", "name", "application"]
         environment            = "test"
         aliases                = ["clouddrove.com"]
-        bucket_name            = module.s3_bucket.s3_default_id[0]
+        bucket_name            = module.s3_bucket.s3_default_id
         viewer_protocol_policy = "redirect-to-https"
-        compress               = "false"
+        compress               = false
         allowed_methods        = ["GET", "HEAD"]
-        acm_certificate_arn    = module.acm.arn[0]
+        acm_certificate_arn    = module.acm.arn
       }
-
 ```
 
 ### Example2
 ```hcl
       module "s3_bucket" {
         source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-
         name           = "secure-bucket-cdn"
         region         = "us-east-1"
         application    = "clouddrove"
         environment    = "test"
         label_order    = ["environment", "name", "application"]
-
         versioning     = true
         acl            = "private"
         bucket_enabled = true
@@ -103,7 +101,6 @@ Include this repository as a module in your existing terraform code:
         application          = "clouddrove"
         environment          = "test"
         label_order          = ["environment", "name", "application"]
-
         domain_name          = "clouddrove.com"
         validation_method    = "EMAIL"
         validate_certificate = false
@@ -111,23 +108,48 @@ Include this repository as a module in your existing terraform code:
 
       module "cdn" {
         source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
-
-        name        = "basic-cdn"
-        application = "clouddrove"
-        environment = "test"
-        label_order = ["environment", "name", "application"]
-
+        name                   = "basic-cdn"
+        application            = "clouddrove"
+        environment            = "test"
+        label_order            = ["environment", "name", "application"]
         aliases                = ["clouddrove.com"]
-        bucket_name            = module.s3_bucket.s3_default_id[0]
+        bucket_name            = module.s3_bucket.s3_default_id
         viewer_protocol_policy = "redirect-to-https"
-        compress               = "false"
+        compress               = false
         allowed_methods        = ["GET", "HEAD"]
-        acm_certificate_arn    = module.acm.arn[0]
+        acm_certificate_arn    = module.acm.arn
         trusted_signers        = ["self"]
-        public_key_enable      = "true"
+        public_key_enable      = true
         public_key             = "./../cdn.pem"
       }
+```
+### Example3
+```hcl
+   module "acm" {
+      source                   = "git::https://github.com/clouddrove/terraform-aws-acm.git"
+      name                     = "certificate"
+      application              = "clouddrove"
+      environment              = "test"
+      label_order              = ["environment", "name", "application"]
+      domain_name              = "clouddrove.com"
+      validation_method        = "EMAIL"
+      validate_certificate     = true
+      }
 
+module "cdn" {
+      source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+      name                   = "domain-cdn"
+      application            = "clouddrove"
+      environment            = "test"
+      label_order            = ["environment", "name", "application"]
+      custom_domain          = true
+      compress               = false
+      aliases                = ["clouddrove.com"]
+      domain_name            = "clouddrove.com"
+      viewer_protocol_policy = "redirect-to-https"
+      allowed_methods        = ["GET", "HEAD"]
+      acm_certificate_arn    = module.acm.arn
+     }
 ```
 
 
@@ -139,76 +161,78 @@ Include this repository as a module in your existing terraform code:
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| acm_certificate_arn | Existing ACM Certificate ARN | string | `` | no |
-| aliases | List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront | list(string) | `<list>` | no |
-| allowed_methods | List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront | list(string) | `<list>` | no |
-| application | Application (e.g. `cp` or `clouddrove`) | string | - | yes |
-| attributes | Additional attributes (e.g. `1`) | list(string) | `<list>` | no |
-| bucket_name | A unique identifier for the origin | string | `` | no |
-| cached_methods | List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD) | list(string) | `<list>` | no |
-| comment | Comment for the origin access identity | string | `Managed by Clouddrove` | no |
-| compress | Compress content for web requests that include Accept-Encoding: gzip in the request header | string | `` | no |
-| custom_domain | If cdn create with custom Domain | string | `false` | no |
-| default_root_object | Object that CloudFront return when requests the root URL | string | `index.html` | no |
-| default_ttl | Default amount of time (in seconds) that an object is in a CloudFront cache | string | `60` | no |
-| domain_name | (Required) - The DNS domain name of your custom origin (e.g. clouddrove.com) | string | `` | no |
-| enabled | Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created | string | `true` | no |
-| enabled_bucket | If cdn create with s3 bucket | string | `false` | no |
-| environment | Environment (e.g. `prod`, `dev`, `staging`) | string | - | yes |
-| error_code | List of forwarded cookie names | string | `404` | no |
-| forward_cookies | Time in seconds that browser can cache the response for S3 bucket | string | `none` | no |
-| forward_cookies_whitelisted_names | List of forwarded cookie names | list | `<list>` | no |
-| forward_header_values | A list of whitelisted header values to forward to the origin | list(string) | `<list>` | no |
-| forward_query_string | Forward query strings to the origin that is associated with this cache behavior | string | `false` | no |
-| geo_restriction_locations | List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist) | list(string) | `<list>` | no |
-| geo_restriction_type | Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist` | string | `none` | no |
-| http_version | (Optional) - The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2 | string | `http2` | no |
-| is_ipv6_enabled | State of CloudFront IPv6 | string | `true` | no |
-| label_order | label order, e.g. `name`,`application` | list | `<list>` | no |
-| max_ttl | Maximum amount of time (in seconds) that an object is in a CloudFront cache | string | `31536000` | no |
-| min_ttl | Minimum amount of time that you want objects to stay in CloudFront caches | string | `0` | no |
-| minimum_protocol_version | Cloudfront TLS minimum protocol version | string | `TLSv1` | no |
-| name | Name  (e.g. `app` or `cluster`) | string | - | yes |
-| origin_force_destroy | Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`) | string | `false` | no |
-| origin_http_port | (Required) - The HTTP port the custom origin listens on | string | `80` | no |
-| origin_https_port | (Required) - The HTTPS port the custom origin listens on | string | `443` | no |
-| origin_keepalive_timeout | (Optional) The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | string | `60` | no |
+| acm_certificate_arn | Existing ACM Certificate ARN. | string | `` | no |
+| aliases | List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront. | list(string) | `<list>` | no |
+| allowed_methods | List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront. | list(string) | `<list>` | no |
+| application | Application (e.g. `cd` or `clouddrove`). | string | `` | no |
+| attributes | Additional attributes (e.g. `1`). | list | `<list>` | no |
+| bucket_name | A unique identifier for the origin. | string | `` | no |
+| cached_methods | List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD). | list(string) | `<list>` | no |
+| comment | Comment for the origin access identity. | string | `Managed by Clouddrove` | no |
+| compress | Compress content for web requests that include Accept-Encoding: gzip in the request header. | bool | `false` | no |
+| custom_domain | If cdn create with custom Domain. | bool | `false` | no |
+| default_root_object | Object that CloudFront return when requests the root URL. | string | `index.html` | no |
+| default_ttl | Default amount of time (in seconds) that an object is in a CloudFront cache. | number | `60` | no |
+| delimiter | Delimiter to be used between `organization`, `environment`, `name` and `attributes` | string | `-` | no |
+| domain_name | The DNS domain name of your custom origin (e.g. clouddrove.com). | string | `` | no |
+| enabled | Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created. | bool | `true` | no |
+| enabled_bucket | If cdn create with s3 bucket. | bool | `false` | no |
+| environment | Environment (e.g. `prod`, `dev`, `staging`). | string | `` | no |
+| error_code | List of forwarded cookie names. | string | `404` | no |
+| forward_cookies | Time in seconds that browser can cache the response for S3 bucket. | string | `none` | no |
+| forward_cookies_whitelisted_names | List of forwarded cookie names. | list | `<list>` | no |
+| forward_header_values | A list of whitelisted header values to forward to the origin. | list(string) | `<list>` | no |
+| forward_query_string | Forward query strings to the origin that is associated with this cache behavior. | bool | `false` | no |
+| geo_restriction_locations | List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist). | list(string) | `<list>` | no |
+| geo_restriction_type | Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist`. | string | `none` | no |
+| http_version | The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2. | string | `http2` | no |
+| is_ipv6_enabled | State of CloudFront IPv6. | bool | `true` | no |
+| label_order | label order, e.g. `name`,`application`. | list | `<list>` | no |
+| max_ttl | Maximum amount of time (in seconds) that an object is in a CloudFront cache. | number | `31536000` | no |
+| min_ttl | Minimum amount of time that you want objects to stay in CloudFront caches. | number | `0` | no |
+| minimum_protocol_version | Cloudfront TLS minimum protocol version. | string | `TLSv1` | no |
+| name | Name  (e.g. `app` or `cluster`). | string | `` | no |
+| origin_force_destroy | Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`). | bool | `false` | no |
+| origin_http_port | The HTTP port the custom origin listens on. | number | `80` | no |
+| origin_https_port | The HTTPS port the custom origin listens on. | number | `443` | no |
+| origin_keepalive_timeout | The Custom KeepAlive timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | number | `60` | no |
 | origin_path | An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path. | string | `` | no |
-| origin_protocol_policy | (Required) - The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer | string | `match-viewer` | no |
-| origin_read_timeout | (Optional) The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | string | `60` | no |
-| origin_ssl_protocols | (Required) - The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS | list | `<list>` | no |
-| price_class | Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100` | string | `PriceClass_100` | no |
-| public_key | he encoded public key that you want to add to CloudFront to use with features like field-level encryption | string | `` | no |
-| public_key_enable | Public key enable or disable | string | `false` | no |
-| response_page_path | The path of the custom error page (for example, /custom_404.html) | string | `` | no |
-| smooth_streaming | (Optional) - Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior | string | `false` | no |
-| ssl_support_method | Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only` | string | `sni-only` | no |
-| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | map(string) | `<map>` | no |
-| trusted_signers | (Optional) - The AWS accounts, if any, that you want to allow to create signed URLs for private content. | list(string) | `<list>` | no |
-| viewer_protocol_policy | allow-all, redirect-to-https | string | `` | no |
-| web_acl_id | (Optional) - Web ACL ID that can be attached to the Cloudfront distribution | string | `` | no |
+| origin_protocol_policy | The origin protocol policy to apply to your origin. One of http-only, https-only, or match-viewer. | string | `match-viewer` | no |
+| origin_read_timeout | The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. But you can request an increase. | number | `60` | no |
+| origin_ssl_protocols | The SSL/TLS protocols that you want CloudFront to use when communicating with your origin over HTTPS. | list(string) | `<list>` | no |
+| price_class | Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | string | `PriceClass_100` | no |
+| public_key | he encoded public key that you want to add to CloudFront to use with features like field-level encryption. | bool | `false` | no |
+| public_key_enable | Public key enable or disable. | bool | `false` | no |
+| response_page_path | The path of the custom error page (for example, /custom_404.html). | string | `` | no |
+| smooth_streaming | Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior. | bool | `false` | no |
+| ssl_support_method | Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only`. | string | `sni-only` | no |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | map | `<map>` | no |
+| trusted_signers | The AWS accounts, if any, that you want to allow to create signed URLs for private content. | list(string) | `<list>` | no |
+| viewer_protocol_policy | allow-all, redirect-to-https. | string | `` | no |
+| web_acl_id | Web ACL ID that can be attached to the Cloudfront distribution. | string | `` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| access_identity_etag | ID of AWS CloudFront distribution |
-| access_identity_id | ID of AWS CloudFront distribution |
-| arn | The ARN (Amazon Resource Name) for the distribution. For example |
-| domain_name | The domain name corresponding to the distribution. For example |
-| etag | The current version of the distribution's information. For example |
-| hosted_zone_id | The CloudFront Route 53 zone ID that can be used to route an Alias Resource Record Set to |
-| id | The identifier for the distribution. For example |
-| pubkey_etag | Current version of the distribution's information |
-| pubkey_id | ID of AWS CloudFront distribution |
-| status | The current status of the distribution |
+| access_identity_etag | The current version of the origin access identity's information. |
+| access_identity_id | The identifier for the distribution. |
+| arn | The ARN (Amazon Resource Name) for the distribution. |
+| domain_name | The domain name corresponding to the distribution. |
+| etag | The current version of the distribution's information. |
+| hosted_zone_id | The CloudFront Route 53 zone ID that can be used to route an Alias Resource Record Set to. |
+| id | The identifier for the distribution. |
+| pubkey_etag | The current version of the public key. |
+| pubkey_id | The identifier for the public key. |
+| status | The current status of the distribution. |
+| tags | A mapping of tags to assign to the resource. |
 
 
 
 
-## Share the Love 
+## Share the Love
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudfront-cdn)! (it helps us **a lot**) 
+Like this project? Please give it a ★ on [our GitHub](https://github.com/clouddrove/terraform-aws-cloudfront-cdn)! (it helps us **a lot**)
 
 ## Related Projects
 
@@ -238,7 +262,7 @@ Copyright © [CloudDrove](https://clouddrove.com). All Right Reserved.
 
 
 
-## License 
+## License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

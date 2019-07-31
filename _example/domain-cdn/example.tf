@@ -18,13 +18,13 @@ module "acm" {
 module "cdn" {
   source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
 
-  name        = "basic-cdn"
+  name        = "domain-cdn"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
 
-  custom_domain          = "true"
-  compress               = "false"
+  custom_domain          = true
+  compress               = false
   aliases                = ["clouddrove.com"]
   domain_name            = "clouddrove.com"
   viewer_protocol_policy = "redirect-to-https"

@@ -9,14 +9,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCDN(t *testing.T) {
+func Test(t *testing.T) {
 	t.Parallel()
 
 	terraformOptions := &terraform.Options{
 		// Source path of Terraform directory.
 		TerraformDir: "../../_example/domain-cdn",
 	}
-	
+
 	// This will run 'terraform init' and 'terraform application' and will fail the test if any errors occur
 	terraform.InitAndApply(t, terraformOptions)
 

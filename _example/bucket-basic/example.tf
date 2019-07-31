@@ -11,10 +11,9 @@ module "s3_bucket" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
+  versioning     = true
   acl            = "private"
   bucket_enabled = true
-  versioning     = true
-
 }
 
 module "acm" {
@@ -38,8 +37,8 @@ module "cdn" {
   environment = "test"
   label_order = ["environment", "name", "application"]
 
-  enabled_bucket         = "true"
-  compress               = "false"
+  enabled_bucket         = true
+  compress               = false
   aliases                = ["clouddrove.com"]
   bucket_name            = module.s3_bucket.id
   viewer_protocol_policy = "redirect-to-https"
