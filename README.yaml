@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name : terraform-aws-cloudfront-cdn
+name : Terraform AWS Cloudfront CDN
 
 # License of this project
 license: "MIT"
@@ -27,7 +27,7 @@ related:
 
 #  description of this project
 description: |-
-  Terraform Module that implements a CloudFront Web Distribution (CDN).
+  Terraform module provisions CloudFront CDN resource on AWS.
 
 # extra content
 # please not remove these two If you need add more
@@ -36,84 +36,39 @@ include:
 
 # How to use this project
 usage : |-
-  Include this repository as a module in your existing terraform code:
+  Here are some examples of how you can use this module in your inventory structure:
   ### Example1
   ```hcl
-        module "s3_bucket" {
-          source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-          name           = "secure-bucket-cdn"
-          region         = "us-east-1"
-          application    = "clouddrove"
-          environment    = "test"
-          label_order    = ["environment", "name", "application"]
-          versioning     = true
-          acl            = "private"
-          bucket_enabled = true
-        }
-
-        module "acm" {
-          source               = "git::https://github.com/clouddrove/terraform-aws-acm.git"
-          name                 = "certificate"
-          application          = "clouddrove"
-          environment          = "test"
-          label_order          = ["environment", "name", "application"]
-          domain_name          = "clouddrove.com"
-          validation_method    = "EMAIL"
-          validate_certificate = true
-        }
-
         module "cdn" {
-          source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+          source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
           name                   = "basic-cdn"
           application            = "clouddrove"
-          label_order            = ["environment", "name", "application"]
           environment            = "test"
-          aliases                = ["clouddrove.com"]
-          bucket_name            = module.s3_bucket.s3_default_id
-          viewer_protocol_policy = "redirect-to-https"
+          label_order            = ["environment", "name", "application"]
+          enabled_bucket         = true
           compress               = false
+          aliases                = ["clouddrove.com"]
+          bucket_name            = "test-bucket"
+          viewer_protocol_policy = "redirect-to-https"
           allowed_methods        = ["GET", "HEAD"]
-          acm_certificate_arn    = module.acm.arn
+          acm_certificate_arn    = "arn:aws:acm:eu-west-1:xxxxxxxxxxxx:certificate/xxxxxx-xxxx-xxxxx-xxxx"
         }
   ```
 
   ### Example2
   ```hcl
-        module "s3_bucket" {
-          source         = "git::https://github.com/clouddrove/terraform-aws-s3.git"
-          name           = "secure-bucket-cdn"
-          region         = "us-east-1"
-          application    = "clouddrove"
-          environment    = "test"
-          label_order    = ["environment", "name", "application"]
-          versioning     = true
-          acl            = "private"
-          bucket_enabled = true
-        }
-
-        module "acm" {
-          source               = "git::https://github.com/clouddrove/terraform-aws-acm.git"
-          name                 = "certificate"
-          application          = "clouddrove"
-          environment          = "test"
-          label_order          = ["environment", "name", "application"]
-          domain_name          = "clouddrove.com"
-          validation_method    = "EMAIL"
-          validate_certificate = false
-        }
-
         module "cdn" {
-          source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+          source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
           name                   = "basic-cdn"
           application            = "clouddrove"
           environment            = "test"
           label_order            = ["environment", "name", "application"]
           aliases                = ["clouddrove.com"]
-          bucket_name            = module.s3_bucket.s3_default_id
+          bucket_name            = "test-bucket"
           viewer_protocol_policy = "redirect-to-https"
           compress               = false
           allowed_methods        = ["GET", "HEAD"]
-          acm_certificate_arn    = module.acm.arn
+          acm_certificate_arn    = "arn:aws:acm:eu-west-1:xxxxxxxxxxxx:certificate/xxxxxx-xxxx-xxxxx-xxxx"
           trusted_signers        = ["self"]
           public_key_enable      = true
           public_key             = "./../cdn.pem"
@@ -121,19 +76,8 @@ usage : |-
   ```
   ### Example3
   ```hcl
-     module "acm" {
-        source                   = "git::https://github.com/clouddrove/terraform-aws-acm.git"
-        name                     = "certificate"
-        application              = "clouddrove"
-        environment              = "test"
-        label_order              = ["environment", "name", "application"]
-        domain_name              = "clouddrove.com"
-        validation_method        = "EMAIL"
-        validate_certificate     = true
-        }
-
-  module "cdn" {
-        source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+      module "cdn" {
+        source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
         name                   = "domain-cdn"
         application            = "clouddrove"
         environment            = "test"
@@ -144,14 +88,6 @@ usage : |-
         domain_name            = "clouddrove.com"
         viewer_protocol_policy = "redirect-to-https"
         allowed_methods        = ["GET", "HEAD"]
-        acm_certificate_arn    = module.acm.arn
+        acm_certificate_arn    = "arn:aws:acm:eu-west-1:xxxxxxxxxxxx:certificate/xxxxxx-xxxx-xxxxx-xxxx"
        }
   ```
-# Contributors to this project
-contributors:
-  - name: "Kamlesh Bhargav"
-    github: "kamleshbhargav"
-  - name: "Nikita Dugar"
-    github: "nikitadugar"
-  - name: "Sohan Yadav"
-    github: "sohanyadav"

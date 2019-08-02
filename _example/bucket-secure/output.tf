@@ -1,6 +1,6 @@
 output "arn" {
   value       = module.cdn.*.arn
-  description = "ARN of AWS CloudFront distribution"
+  description = "ARN of AWS CloudFront distribution."
 }
 
 output "tags" {
