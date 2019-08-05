@@ -58,7 +58,7 @@ This module has a few dependencies:
 
 
 Here are some examples of how you can use this module in your inventory structure:
-### Example1
+### CDN With Basic Bucket
 ```hcl
       module "cdn" {
         source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
@@ -76,11 +76,11 @@ Here are some examples of how you can use this module in your inventory structur
       }
 ```
 
-### Example2
+### CDN With Secure Bucket
 ```hcl
       module "cdn" {
         source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
-        name                   = "basic-cdn"
+        name                   = "secure-cdn"
         application            = "clouddrove"
         environment            = "test"
         label_order            = ["environment", "name", "application"]
@@ -95,7 +95,7 @@ Here are some examples of how you can use this module in your inventory structur
         public_key             = "./../cdn.pem"
       }
 ```
-### Example3
+### CDN With Domain
 ```hcl
     module "cdn" {
       source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
