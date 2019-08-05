@@ -21,7 +21,7 @@ variable "environment" {
 variable "label_order" {
   type        = list
   default     = []
-  description = "label order, e.g. `name`,`application`."
+  description = "Label order, e.g. `name`,`application`."
 }
 
 variable "attributes" {
@@ -33,7 +33,7 @@ variable "attributes" {
 variable "delimiter" {
   type        = string
   default     = "-"
-  description = "Delimiter to be used between `organization`, `environment`, `name` and `attributes`"
+  description = "Delimiter to be used between `organization`, `environment`, `name` and `attributes`."
 }
 
 variable "tags" {
@@ -65,7 +65,7 @@ variable "origin_path" {
 variable "viewer_protocol_policy" {
   type        = string
   default     = ""
-  description = "allow-all, redirect-to-https."
+  description = "Allow-all, redirect-to-https."
 }
 
 variable "allowed_methods" {
@@ -245,7 +245,7 @@ variable "public_key_enable" {
 variable "public_key" {
   type        = string
   default     = ""
-  description = "he encoded public key that you want to add to CloudFront to use with features like field-level encryption."
+  description = "It encoded public key that you want to add to CloudFront to use with features like field-level encryption."
 }
 
 variable "origin_http_port" {

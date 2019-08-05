@@ -5,7 +5,7 @@ provider "aws" {
 module "s3_bucket" {
   source = "git::https://github.com/clouddrove/terraform-aws-s3.git"
 
-  name        = "secure-bucket-cdn"
+  name        = "basic-bucket-cdn"
   region      = "us-east-1"
   application = "clouddrove"
   environment = "test"

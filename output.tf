@@ -29,7 +29,7 @@ output "domain_name" {
     aws_cloudfront_distribution.bucket.*.domain_name,
     aws_cloudfront_distribution.domain.*.domain_name
   )[0]
-  description = " The domain name corresponding to the distribution."
+  description = "The domain name corresponding to the distribution."
 }
 
 output "etag" {
