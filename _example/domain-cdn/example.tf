@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 module "acm" {
-  source = "git::https://github.com/clouddrove/terraform-aws-acm.git"
+  source = "git::https://github.com/clouddrove/terraform-aws-acm.git?ref=tags/0.12.0"
 
   name        = "certificate"
   application = "clouddrove"
@@ -16,7 +16,7 @@ module "acm" {
 }
 
 module "cdn" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git?ref=tags/0.12.0"
 
   name        = "domain-cdn"
   application = "clouddrove"

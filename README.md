@@ -67,7 +67,7 @@ Here are some examples of how you can use this module in your inventory structur
 ### CDN With Basic Bucket
 ```hcl
       module "cdn" {
-        source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+        source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git?ref=tags/0.12.0"
         name                   = "basic-cdn"
         application            = "clouddrove"
         environment            = "test"
@@ -85,7 +85,7 @@ Here are some examples of how you can use this module in your inventory structur
 ### CDN With Secure Bucket
 ```hcl
       module "cdn" {
-        source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+        source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git?ref=tags/0.12.0"
         name                   = "secure-cdn"
         application            = "clouddrove"
         environment            = "test"
@@ -104,7 +104,7 @@ Here are some examples of how you can use this module in your inventory structur
 ### CDN With Domain
 ```hcl
     module "cdn" {
-      source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git"
+      source                 = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git?ref=tags/0.12.0"
       name                   = "domain-cdn"
       application            = "clouddrove"
       environment            = "test"
