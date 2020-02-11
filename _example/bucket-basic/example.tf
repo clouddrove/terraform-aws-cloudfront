@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-1"
 }
 
 module "s3_bucket" {
@@ -14,6 +14,22 @@ module "s3_bucket" {
   versioning     = true
   acl            = "private"
   bucket_enabled = true
+  bucket_policy           = true
+  aws_iam_policy_document = data.aws_iam_policy_document.s3_policy.json
+}
+
+data "aws_iam_policy_document" "s3_policy" {
+  version = "2012-10-17"
+  statement {
+    sid    = "1"
+    effect = "Allow"
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity xxxxxxxxxxxxx"]
+    }
+    actions   = ["s3:GetObject"]
+    resources = [format("%s/*", module.s3_bucket.arn)]
+  }
 }
 
 module "acm" {
@@ -30,7 +46,7 @@ module "acm" {
 }
 
 module "cdn" {
-  source = "git::https://github.com/clouddrove/terraform-aws-cloudfront-cdn.git?ref=tags/0.12.0"
+  source = "./../../"
 
   name        = "basic-cdn"
   application = "clouddrove"

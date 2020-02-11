@@ -18,7 +18,7 @@ module "labels" {
 # Module      : CLOUDFRONT ORIGIN ACCESS IDENENTITY
 # Description : Creates an Amazon CloudFront origin access identity
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
-  count   = var.enabled_bucket == true ? 1 : 0
+  count   = var.cdn_enabled == true && var.enabled_bucket == true ? 1 : 0
   comment = format("access-identity-%s.s3.amazonaws.com", var.bucket_name)
 }
 
@@ -29,7 +29,7 @@ locals {
 # Module      : CLOUDFRONT DISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
 resource "aws_cloudfront_distribution" "bucket" {
-  count = var.enabled_bucket == true ? 1 : 0
+  count = var.cdn_enabled == true && var.enabled_bucket == true ? 1 : 0
 
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
@@ -95,7 +95,7 @@ resource "aws_cloudfront_distribution" "bucket" {
 # Module      : CLOUDFRONT CussDISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
 resource "aws_cloudfront_distribution" "domain" {
-  count = var.custom_domain == true ? 1 : 0
+  count = var.cdn_enabled == true && var.custom_domain == true ? 1 : 0
 
   enabled             = var.enabled
   is_ipv6_enabled     = var.is_ipv6_enabled
@@ -168,7 +168,7 @@ resource "aws_cloudfront_distribution" "domain" {
 # Module      : CLOUDFRONT PUBLIC KEY
 # Description : Creates a CloudFront public key
 resource "aws_cloudfront_public_key" "default" {
-  count = var.public_key_enable == true ? 1 : 0
+  count = var.cdn_enabled == true && var.public_key_enable == true ? 1 : 0
 
   comment     = var.comment
   encoded_key = file(var.public_key)
