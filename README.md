@@ -158,6 +158,7 @@ Here are some examples of how you can use this module in your inventory structur
 | http\_version | The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2. | string | `"http2"` | no |
 | is\_ipv6\_enabled | State of CloudFront IPv6. | bool | `"true"` | no |
 | label\_order | Label order, e.g. `name`,`application`. | list | `<list>` | no |
+| managedby | ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'. | string | `"anmol@clouddrove.com"` | no |
 | max\_ttl | Maximum amount of time \(in seconds\) that an object is in a CloudFront cache. | number | `"31536000"` | no |
 | min\_ttl | Minimum amount of time that you want objects to stay in CloudFront caches. | number | `"0"` | no |
 | minimum\_protocol\_version | Cloudfront TLS minimum protocol version. | string | `"TLSv1"` | no |
