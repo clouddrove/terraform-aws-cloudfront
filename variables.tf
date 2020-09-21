@@ -24,6 +24,12 @@ variable "label_order" {
   description = "Label order, e.g. `name`,`application`."
 }
 
+variable "managedby" {
+  type        = string
+  default     = "anmol@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+}
+
 variable "attributes" {
   type        = list
   default     = []
@@ -294,4 +300,10 @@ variable "web_acl_id" {
   type        = string
   default     = ""
   description = "Web ACL ID that can be attached to the Cloudfront distribution."
+}
+
+variable "cdn_enabled" {
+  type        = bool
+  default     = true
+  description = "Select Enabled if you want to created CloudFront."
 }
