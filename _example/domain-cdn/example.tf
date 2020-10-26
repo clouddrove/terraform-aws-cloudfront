@@ -3,16 +3,18 @@ provider "aws" {
 }
 
 module "acm" {
-  source = "git::https://github.com/clouddrove/terraform-aws-acm.git?ref=tags/0.12.0"
+  source  = "clouddrove/acm/aws"
+  version = "0.13.0"
 
   name        = "certificate"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
 
-  domain_name          = "clouddrove.com"
-  validation_method    = "EMAIL"
-  validate_certificate = true
+  domain_name            = "clouddrove.com"
+  validation_method      = "EMAIL"
+  validate_certificate   = true
+  enable_aws_certificate = true
 }
 
 module "cdn" {
