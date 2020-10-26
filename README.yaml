@@ -80,7 +80,7 @@ usage : |-
   ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-          version              = "0.13.0"
+        version              = "0.13.0"
         name                   = "domain-cdn"
         application            = "clouddrove"
         environment            = "test"
