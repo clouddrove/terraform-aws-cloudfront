@@ -3,10 +3,9 @@ provider "aws" {
 }
 
 module "s3_bucket" {
-  source = "git::https://github.com/clouddrove/terraform-aws-s3.git?ref=tags/0.12.2"
-
+  source      = "clouddrove/s3/aws"
+  version     = "0.13.0"
   name        = "secure-bucket-cdn"
-  region      = "us-east-1"
   application = "clouddrove"
   environment = "test"
   label_order = ["environment", "name", "application"]
@@ -17,7 +16,8 @@ module "s3_bucket" {
 }
 
 module "acm" {
-  source = "git::https://github.com/clouddrove/terraform-aws-acm.git?ref=tags/0.12.0"
+  source  = "clouddrove/acm/aws"
+  version = "0.13.0"
 
   name        = "certificate"
   application = "clouddrove"
@@ -27,6 +27,7 @@ module "acm" {
   domain_name          = "clouddrove.com"
   validation_method    = "EMAIL"
   validate_certificate = false
+
 }
 
 module "cdn" {
