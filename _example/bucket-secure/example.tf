@@ -4,11 +4,11 @@ provider "aws" {
 
 module "s3_bucket" {
   source      = "clouddrove/s3/aws"
-  version     = "0.13.0"
+  version     = "0.14.0"
   name        = "secure-bucket-cdn"
-  application = "clouddrove"
+  repository  = "https://registry.terraform.io/modules/clouddrove/s3/aws/0.14.0"
   environment = "test"
-  label_order = ["environment", "name", "application"]
+  label_order = ["name", "environment"]
 
   versioning     = true
   acl            = "private"
@@ -17,12 +17,12 @@ module "s3_bucket" {
 
 module "acm" {
   source  = "clouddrove/acm/aws"
-  version = "0.13.0"
+  version = "0.14.0"
 
   name        = "certificate"
-  application = "clouddrove"
+  repository  = "https://registry.terraform.io/modules/acm/s3/aws/0.14.0"
   environment = "test"
-  label_order = ["environment", "name", "application"]
+  label_order = ["name", "environment"]
 
   domain_name          = "clouddrove.com"
   validation_method    = "EMAIL"
@@ -33,11 +33,10 @@ module "acm" {
 module "cdn" {
   source = "./../../"
 
-  name        = "secure-cdn"
-  application = "clouddrove"
-  environment = "test"
-  label_order = ["environment", "name", "application"]
-
+  name                   = "secure-cdn"
+  repository             = "https://registry.terraform.io/modules/cdn/s3/aws/0.14.0"
+  environment            = "test"
+  label_order            = ["name", "environment"]
   enabled_bucket         = true
   compress               = false
   aliases                = ["clouddrove.com"]

@@ -6,10 +6,16 @@ variable "name" {
   description = "Name  (e.g. `app` or `cluster`)."
 }
 
-variable "application" {
+variable "repository" {
   type        = string
   default     = ""
-  description = "Application (e.g. `cd` or `clouddrove`)."
+  description = "Terraform current module repo"
+
+  validation {
+    # regex(...) fails if it cannot find a match
+    condition     = can(regex("^https://", var.repository))
+    error_message = "The module-repo value must be a valid Git repo link."
+  }
 }
 
 variable "environment" {
@@ -26,8 +32,8 @@ variable "label_order" {
 
 variable "managedby" {
   type        = string
-  default     = "anmol@clouddrove.com"
-  description = "ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'."
+  default     = "hello@clouddrove.com"
+  description = "ManagedBy, eg 'CloudDrove'."
 }
 
 variable "attributes" {
@@ -60,6 +66,7 @@ variable "bucket_name" {
   type        = string
   default     = ""
   description = "A unique identifier for the origin."
+  sensitive   = true
 }
 
 variable "origin_path" {
@@ -150,12 +157,14 @@ variable "geo_restriction_locations" {
   type        = list(string)
   default     = []
   description = "List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist)."
+  sensitive   = true
 }
 
 variable "acm_certificate_arn" {
   type        = string
   default     = ""
   description = "Existing ACM Certificate ARN."
+  sensitive   = true
 }
 
 variable "minimum_protocol_version" {
@@ -168,6 +177,7 @@ variable "http_version" {
   type        = string
   default     = "http2"
   description = "The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2."
+  sensitive   = true
 }
 
 variable "is_ipv6_enabled" {
@@ -228,6 +238,7 @@ variable "forward_cookies_whitelisted_names" {
   type        = list
   default     = []
   description = "List of forwarded cookie names."
+  sensitive   = true
 }
 
 variable "error_code" {
@@ -252,6 +263,7 @@ variable "public_key" {
   type        = string
   default     = ""
   description = "It encoded public key that you want to add to CloudFront to use with features like field-level encryption."
+  sensitive   = true
 }
 
 variable "origin_http_port" {
@@ -294,12 +306,14 @@ variable "domain_name" {
   type        = string
   default     = ""
   description = "The DNS domain name of your custom origin (e.g. clouddrove.com)."
+  sensitive   = true
 }
 
 variable "web_acl_id" {
   type        = string
   default     = ""
   description = "Web ACL ID that can be attached to the Cloudfront distribution."
+  sensitive   = true
 }
 
 variable "cdn_enabled" {
