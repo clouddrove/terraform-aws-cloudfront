@@ -25,7 +25,7 @@ variable "environment" {
 }
 
 variable "label_order" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Label order, e.g. `name`,`application`."
 }
@@ -37,7 +37,7 @@ variable "managedby" {
 }
 
 variable "attributes" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "Additional attributes (e.g. `1`)."
 }
@@ -49,7 +49,7 @@ variable "delimiter" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   default     = {}
   description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
 }
@@ -235,7 +235,7 @@ variable "ssl_support_method" {
 }
 
 variable "forward_cookies_whitelisted_names" {
-  type        = list
+  type        = list(any)
   default     = []
   description = "List of forwarded cookie names."
   sensitive   = true
