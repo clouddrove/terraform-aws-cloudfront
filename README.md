@@ -70,11 +70,11 @@ Here are some examples of how you can use this module in your inventory structur
 ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-        version                = "0.13.0"
+        version                = "0.14.0"
         name                   = "basic-cdn"
-        application            = "clouddrove"
+        repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
         environment            = "test"
-        label_order            = ["environment", "name", "application"]
+        label_order            = ["name", "environment"]
         enabled_bucket         = true
         compress               = false
         aliases                = ["clouddrove.com"]
@@ -89,11 +89,11 @@ Here are some examples of how you can use this module in your inventory structur
 ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-        version                = "0.13.0"
+        version                = "0.14.0"
         name                   = "secure-cdn"
-        application            = "clouddrove"
+        repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
         environment            = "test"
-        label_order            = ["environment", "name", "application"]
+        label_order            = ["name", "environment"]
         aliases                = ["clouddrove.com"]
         bucket_name            = "test-bucket"
         viewer_protocol_policy = "redirect-to-https"
@@ -109,11 +109,11 @@ Here are some examples of how you can use this module in your inventory structur
 ```hcl
     module "cdn" {
       source                 = "clouddrove/cloudfront-cdn/aws"
-      version              = "0.13.0"
+      version                = "0.14.0"
       name                   = "domain-cdn"
-      application            = "clouddrove"
+      repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
       environment            = "test"
-      label_order            = ["environment", "name", "application"]
+      label_order            = ["name", "environment"]
       custom_domain          = true
       compress               = false
       aliases                = ["clouddrove.com"]
@@ -136,8 +136,7 @@ Here are some examples of how you can use this module in your inventory structur
 | acm\_certificate\_arn | Existing ACM Certificate ARN. | `string` | `""` | no |
 | aliases | List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront. | `list(string)` | `[]` | no |
 | allowed\_methods | List of allowed methods (e.g. GET, PUT, POST, DELETE, HEAD) for AWS CloudFront. | `list(string)` | <pre>[<br>  "DELETE",<br>  "GET",<br>  "HEAD",<br>  "OPTIONS",<br>  "PATCH",<br>  "POST",<br>  "PUT"<br>]</pre> | no |
-| application | Application (e.g. `cd` or `clouddrove`). | `string` | `""` | no |
-| attributes | Additional attributes (e.g. `1`). | `list` | `[]` | no |
+| attributes | Additional attributes (e.g. `1`). | `list(any)` | `[]` | no |
 | bucket\_name | A unique identifier for the origin. | `string` | `""` | no |
 | cached\_methods | List of cached methods (e.g. GET, PUT, POST, DELETE, HEAD). | `list(string)` | <pre>[<br>  "GET",<br>  "HEAD"<br>]</pre> | no |
 | cdn\_enabled | Select Enabled if you want to created CloudFront. | `bool` | `true` | no |
@@ -153,15 +152,15 @@ Here are some examples of how you can use this module in your inventory structur
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
 | error\_code | List of forwarded cookie names. | `string` | `"404"` | no |
 | forward\_cookies | Time in seconds that browser can cache the response for S3 bucket. | `string` | `"none"` | no |
-| forward\_cookies\_whitelisted\_names | List of forwarded cookie names. | `list` | `[]` | no |
+| forward\_cookies\_whitelisted\_names | List of forwarded cookie names. | `list(any)` | `[]` | no |
 | forward\_header\_values | A list of whitelisted header values to forward to the origin. | `list(string)` | <pre>[<br>  "Access-Control-Request-Headers",<br>  "Access-Control-Request-Method",<br>  "Origin"<br>]</pre> | no |
 | forward\_query\_string | Forward query strings to the origin that is associated with this cache behavior. | `bool` | `false` | no |
 | geo\_restriction\_locations | List of country codes for which  CloudFront either to distribute content (whitelist) or not distribute your content (blacklist). | `list(string)` | `[]` | no |
 | geo\_restriction\_type | Method that use to restrict distribution of your content by country: `none`, `whitelist`, or `blacklist`. | `string` | `"none"` | no |
 | http\_version | The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2. | `string` | `"http2"` | no |
 | is\_ipv6\_enabled | State of CloudFront IPv6. | `bool` | `true` | no |
-| label\_order | Label order, e.g. `name`,`application`. | `list` | `[]` | no |
-| managedby | ManagedBy, eg 'CloudDrove' or 'AnmolNagpal'. | `string` | `"anmol@clouddrove.com"` | no |
+| label\_order | Label order, e.g. `name`,`application`. | `list(any)` | `[]` | no |
+| managedby | ManagedBy, eg 'CloudDrove'. | `string` | `"hello@clouddrove.com"` | no |
 | max\_ttl | Maximum amount of time (in seconds) that an object is in a CloudFront cache. | `number` | `31536000` | no |
 | min\_ttl | Minimum amount of time that you want objects to stay in CloudFront caches. | `number` | `0` | no |
 | minimum\_protocol\_version | Cloudfront TLS minimum protocol version. | `string` | `"TLSv1"` | no |
@@ -177,10 +176,11 @@ Here are some examples of how you can use this module in your inventory structur
 | price\_class | Price class for this distribution: `PriceClass_All`, `PriceClass_200`, `PriceClass_100`. | `string` | `"PriceClass_100"` | no |
 | public\_key | It encoded public key that you want to add to CloudFront to use with features like field-level encryption. | `string` | `""` | no |
 | public\_key\_enable | Public key enable or disable. | `bool` | `false` | no |
+| repository | Terraform current module repo | `string` | `""` | no |
 | response\_page\_path | The path of the custom error page (for example, /custom\_404.html). | `string` | `null` | no |
 | smooth\_streaming | Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior. | `bool` | `false` | no |
 | ssl\_support\_method | Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only`. | `string` | `"sni-only"` | no |
-| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map` | `{}` | no |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
 | trusted\_signers | The AWS accounts, if any, that you want to allow to create signed URLs for private content. | `list(string)` | `[]` | no |
 | viewer\_protocol\_policy | Allow-all, redirect-to-https. | `string` | `""` | no |
 | web\_acl\_id | Web ACL ID that can be attached to the Cloudfront distribution. | `string` | `""` | no |
