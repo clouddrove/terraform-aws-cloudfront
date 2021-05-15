@@ -41,11 +41,11 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.13.0"
+          version                = "0.14.0"
           name                   = "basic-cdn"
-          application            = "clouddrove"
+          repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
           environment            = "test"
-          label_order            = ["environment", "name", "application"]
+          label_order            = ["name", "environment"]
           enabled_bucket         = true
           compress               = false
           aliases                = ["clouddrove.com"]
@@ -60,11 +60,11 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.13.0"
+          version                = "0.14.0"
           name                   = "secure-cdn"
-          application            = "clouddrove"
+          repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
           environment            = "test"
-          label_order            = ["environment", "name", "application"]
+          label_order            = ["name", "environment"]
           aliases                = ["clouddrove.com"]
           bucket_name            = "test-bucket"
           viewer_protocol_policy = "redirect-to-https"
@@ -80,11 +80,11 @@ usage : |-
   ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-        version              = "0.13.0"
+        version                = "0.14.0"
         name                   = "domain-cdn"
-        application            = "clouddrove"
+        repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
         environment            = "test"
-        label_order            = ["environment", "name", "application"]
+        label_order            = ["name", "environment"]
         custom_domain          = true
         compress               = false
         aliases                = ["clouddrove.com"]
