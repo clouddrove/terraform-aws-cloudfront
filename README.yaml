@@ -41,9 +41,8 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.14.0"
+          version                = "0.15.0"
           name                   = "basic-cdn"
-          repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
           environment            = "test"
           label_order            = ["name", "environment"]
           enabled_bucket         = true
@@ -60,9 +59,8 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.14.0"
+          version                = "0.15.0"
           name                   = "secure-cdn"
-          repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
           environment            = "test"
           label_order            = ["name", "environment"]
           aliases                = ["clouddrove.com"]
@@ -80,9 +78,8 @@ usage : |-
   ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-        version                = "0.14.0"
+        version                = "0.15.0"
         name                   = "domain-cdn"
-        repository             = "https://registry.terraform.io/modules/clouddrove/cloudfront/aws/0.14.0"
         environment            = "test"
         label_order            = ["name", "environment"]
         custom_domain          = true
