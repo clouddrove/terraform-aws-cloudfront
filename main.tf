@@ -98,7 +98,7 @@ resource "aws_cloudfront_distribution" "bucket" {
 
 # Module      : CLOUDFRONT CussDISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
-
+#tfsec:ignore:aws-cloudfront-use-secure-tls-policy
  #tfsec:ignore:aws-cloudfront-enable-waf
 resource "aws_cloudfront_distribution" "domain" {
   count = var.cdn_enabled == true && var.custom_domain == true ? 1 : 0
