@@ -8,16 +8,25 @@
 name : Terraform AWS Cloudfront CDN
 
 # License of this project
-license: "MIT"
+license: "APACHE"
 
 # Canonical GitHub repo
 github_repo: clouddrove/terraform-aws-cloudfront-cdn
 
 # Badges to display
 badges:
-  - name: "Build Status"
-    image: "https://img.shields.io/badge/build-passing-green.svg"
-    url: "https://travis-ci.org/cloudposse/terraform-aws-vpc"
+  - name: "Terraform"
+    image: "https://img.shields.io/badge/Terraform-v1.1.7-green"
+    url: "https://www.terraform.io"
+  - name: "Licence"
+    image: "https://img.shields.io/badge/License-APACHE-blue.svg"
+    url: "LICENSE.md"
+  - name: "tfsec"
+    image: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/tfsec.yml/badge.svg"
+    url: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/tfsec.yml"
+  - name: "static-checks"
+    image: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/terraform.yml/badge.svg"
+    url: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/terraform.yml"
 
 #  Related Projects of this project
 related:
@@ -41,7 +50,7 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.15.0"
+          version                = "1.0.1"
           name                   = "basic-cdn"
           environment            = "test"
           label_order            = ["name", "environment"]
@@ -59,7 +68,7 @@ usage : |-
   ```hcl
         module "cdn" {
           source                 = "clouddrove/cloudfront-cdn/aws"
-          version                = "0.15.0"
+          version                = "1.0.1"
           name                   = "secure-cdn"
           environment            = "test"
           label_order            = ["name", "environment"]
@@ -78,7 +87,7 @@ usage : |-
   ```hcl
       module "cdn" {
         source                 = "clouddrove/cloudfront-cdn/aws"
-        version                = "0.15.0"
+        version                = "1.0.1"
         name                   = "domain-cdn"
         environment            = "test"
         label_order            = ["name", "environment"]
