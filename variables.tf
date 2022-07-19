@@ -243,13 +243,14 @@ variable "forward_cookies_whitelisted_names" {
 
 variable "error_code" {
   type        = string
-  default     = "404"
+  default     = "403"
   description = "List of forwarded cookie names."
 }
 
+
 variable "response_page_path" {
   type        = string
-  default     = null
+  default     = "/index.html"
   description = "The path of the custom error page (for example, /custom_404.html)."
 }
 
@@ -320,4 +321,18 @@ variable "cdn_enabled" {
   type        = bool
   default     = true
   description = "Select Enabled if you want to created CloudFront."
+}
+
+
+variable "response_code" {
+  type        = string
+  default     = "404"
+  description = "The path of the custom error page (for example, /custom_404.html)."
+}
+
+
+variable "error_caching_min_ttl" {
+  type        = string
+  default     = "10"
+  description = "The path of the custom error page (for example, /custom_404.html)."
 }
