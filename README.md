@@ -156,7 +156,8 @@ Here are some examples of how you can use this module in your inventory structur
 | enabled | Select Enabled if you want CloudFront to begin processing requests as soon as the distribution is created, or select Disabled if you do not want CloudFront to begin processing requests after the distribution is created. | `bool` | `true` | no |
 | enabled\_bucket | If cdn create with s3 bucket. | `bool` | `false` | no |
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
-| error\_code | List of forwarded cookie names. | `string` | `"404"` | no |
+| error\_caching\_min\_ttl | the value of errro caching min ttl | `string` | `"10"` | no |
+| error\_code | List of forwarded cookie names. | `string` | `"403"` | no |
 | forward\_cookies | Time in seconds that browser can cache the response for S3 bucket. | `string` | `"none"` | no |
 | forward\_cookies\_whitelisted\_names | List of forwarded cookie names. | `list(any)` | `[]` | no |
 | forward\_header\_values | A list of whitelisted header values to forward to the origin. | `list(string)` | <pre>[<br>  "Access-Control-Request-Headers",<br>  "Access-Control-Request-Method",<br>  "Origin"<br>]</pre> | no |
@@ -183,7 +184,8 @@ Here are some examples of how you can use this module in your inventory structur
 | public\_key | It encoded public key that you want to add to CloudFront to use with features like field-level encryption. | `string` | `""` | no |
 | public\_key\_enable | Public key enable or disable. | `bool` | `false` | no |
 | repository | Terraform current module repo | `string` | `"https://github.com/clouddrove/terraform-aws-cloudfront-cdn"` | no |
-| response\_page\_path | The path of the custom error page (for example, /custom\_404.html). | `string` | `null` | no |
+| response\_code | page not found code | `string` | `"404"` | no |
+| response\_page\_path | The path of the custom error page (for example, /custom\_404.html). | `string` | `"/index.html"` | no |
 | smooth\_streaming | Indicates whether you want to distribute media files in Microsoft Smooth Streaming format using the origin that is associated with this cache behavior. | `bool` | `false` | no |
 | ssl\_support\_method | Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only`. | `string` | `"sni-only"` | no |
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(any)` | `{}` | no |
