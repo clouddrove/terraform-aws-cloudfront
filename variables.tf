@@ -327,12 +327,12 @@ variable "cdn_enabled" {
 variable "response_code" {
   type        = string
   default     = "404"
-  description = "The path of the custom error page (for example, /custom_404.html)."
+  description = "page not found code"
 }
 
 
 variable "error_caching_min_ttl" {
   type        = string
   default     = "10"
-  description = "The path of the custom error page (for example, /custom_404.html)."
+  description = "the value of errro caching min ttl"
 }
