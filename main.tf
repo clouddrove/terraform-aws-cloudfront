@@ -89,8 +89,10 @@ resource "aws_cloudfront_distribution" "bucket" {
   }
 
   custom_error_response {
-    error_code         = var.error_code
-    response_page_path = var.response_page_path
+    error_caching_min_ttl  = var.error_caching_min_ttl
+    error_code             = var.error_code
+    response_code          = var.response_code
+    response_page_path     = var.response_page_path
   }
 
   tags = module.labels.tags
