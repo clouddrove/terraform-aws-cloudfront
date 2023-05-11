@@ -4,7 +4,7 @@ provider "aws" {
 
 module "s3_bucket" {
   source      = "clouddrove/s3/aws"
-  version     = "0.15.1"
+  version     = "1.3.0"
   name        = "secure-bucket-cdn"
   environment = "test"
   label_order = ["name", "environment"]
@@ -15,7 +15,7 @@ module "s3_bucket" {
 
 module "acm" {
   source  = "clouddrove/acm/aws"
-  version = "1.0.1"
+  version = "1.3.0"
 
   name        = "certificate"
   environment = "test"
