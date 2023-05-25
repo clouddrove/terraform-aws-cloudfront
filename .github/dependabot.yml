@@ -8,7 +8,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-# Add assignees
+  # Add assignees
     assignees:
       - "clouddrove-ci"
   # Add reviewer
@@ -19,7 +19,7 @@ updates:
     directory: "_example/bucket-basic" # Location of package manifests
     schedule:
       interval: "weekly"
-# Add assignees
+  # Add assignees
     assignees:
       - "clouddrove-ci"
   # Add reviewer
@@ -30,7 +30,7 @@ updates:
     directory: "_example/bucket-secure" # Location of package manifests
     schedule:
       interval: "weekly"
-# Add assignees
+  # Add assignees
     assignees:
       - "clouddrove-ci"
   # Add reviewer
@@ -41,7 +41,7 @@ updates:
     directory: "_example/domain-cdn" # Location of package manifests
     schedule:
       interval: "weekly"
-# Add assignees
+  # Add assignees
     assignees:
       - "clouddrove-ci"
   # Add reviewer
