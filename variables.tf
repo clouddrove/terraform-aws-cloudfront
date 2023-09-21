@@ -36,24 +36,6 @@ variable "managedby" {
   description = "ManagedBy, eg 'CloudDrove'."
 }
 
-variable "attributes" {
-  type        = list(any)
-  default     = []
-  description = "Additional attributes (e.g. `1`)."
-}
-
-variable "delimiter" {
-  type        = string
-  default     = "-"
-  description = "Delimiter to be used between `organization`, `environment`, `name` and `attributes`."
-}
-
-variable "tags" {
-  type        = map(any)
-  default     = {}
-  description = "Additional tags (e.g. map(`BusinessUnit`,`XYZ`)."
-}
-
 # Module      : CDN Module
 # Description : Terraform CDN module variables
 variable "aliases" {
@@ -173,13 +155,6 @@ variable "minimum_protocol_version" {
   description = "Cloudfront TLS minimum protocol version."
 }
 
-variable "http_version" {
-  type        = string
-  default     = "http2"
-  description = "The maximum HTTP version to support on the distribution. Allowed values are http1.1 and http2. The default is http2."
-  sensitive   = true
-}
-
 variable "is_ipv6_enabled" {
   type        = bool
   default     = true
@@ -208,12 +183,6 @@ variable "custom_domain" {
   type        = bool
   default     = false
   description = "If cdn create with custom Domain."
-}
-
-variable "origin_force_destroy" {
-  type        = bool
-  default     = false
-  description = "Delete all objects from the bucket  so that the bucket can be destroyed without error (e.g. `true` or `false`)."
 }
 
 variable "trusted_signers" {

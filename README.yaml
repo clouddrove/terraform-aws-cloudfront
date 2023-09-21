@@ -5,35 +5,29 @@
 #
 
 # Name of this project
-name : Terraform AWS Cloudfront CDN
+name : Terraform AWS Cloudfront
 
 # License of this project
 license: "APACHE"
 
 # Canonical GitHub repo
-github_repo: clouddrove/terraform-aws-cloudfront-cdn
+github_repo: clouddrove/terraform-aws-cloudfront
 
 # Badges to display
 badges:
-  - name: "Terraform"
-    image: "https://img.shields.io/badge/Terraform-v1.1.7-green"
-    url: "https://www.terraform.io"
-  - name: "Licence"
-    image: "https://img.shields.io/badge/License-APACHE-blue.svg"
-    url: "LICENSE.md"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/clouddrove/terraform-aws-cloudfront.svg"
+    url: "https://github.com/clouddrove/terraform-aws-cloudfront/releases/latest"
   - name: "tfsec"
     image: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/tfsec.yml/badge.svg"
     url: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/tfsec.yml"
-  - name: "static-checks"
-    image: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/terraform.yml/badge.svg"
-    url: "https://github.com/clouddrove/terraform-aws-cloudfront/actions/workflows/terraform.yml"
+  - name: "Licence"
+    image: "https://img.shields.io/badge/License-APACHE-blue.svg"
+    url: "LICENSE.md"
 
-#  Related Projects of this project
-related:
-  - name: "terraform-aws-s3"
-    description: "Terraform module to creates a s3 bucket with support of versioning, encryption, ACL."
-    url: "https://github.com/clouddrove/terraform-aws-s3"
-
+prerequesties:
+  - name: Terraform 1.5.3
+    url: https://learn.hashicorp.com/terraform/getting-started/install.html
 #  description of this project
 description: |-
   Terraform module provisions CloudFront CDN resource on AWS.
@@ -98,5 +92,5 @@ usage : |-
         viewer_protocol_policy = "redirect-to-https"
         allowed_methods        = ["GET", "HEAD"]
         acm_certificate_arn    = "arn:aws:acm:eu-west-1:xxxxxxxxxxxx:certificate/xxxxxx-xxxx-xxxxx-xxxx"
-       }
+     }
   ```
