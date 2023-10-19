@@ -1,0 +1,19 @@
+name: tf-checks
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+jobs:
+  bucket-basic:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.6
+    with:
+      working_directory: './_example/bucket-basic/'
+  bucket-secure:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.6
+    with:
+      working_directory: './_example/bucket-secure/'
+  domain-cdn:
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.6
+    with:
+      working_directory: './_example/domain-cdn/'

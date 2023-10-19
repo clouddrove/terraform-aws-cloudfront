@@ -1,15 +1,18 @@
 provider "aws" {
-  region = "us-east-1"
+  region = local.region
+}
+locals {
+  region      = "us-east-1"
+  name        = "cloudfront"
+  environment = "test"
 }
 
 module "s3_bucket" {
   source  = "clouddrove/s3/aws"
-  version = "1.3.0"
+  version = "2.0.0"
 
-  name        = "basic-bucket-cdn"
-  environment = "test"
-  label_order = ["name", "environment"]
-
+  name                    = "${local.name}-basic-bucket-cdn"
+  environment             = local.environment
   versioning              = true
   acl                     = "private"
   bucket_policy           = true
@@ -31,11 +34,11 @@ data "aws_iam_policy_document" "s3_policy" {
 }
 
 module "acm" {
-  source                 = "clouddrove/acm/aws"
-  version                = "1.3.0"
-  name                   = "certificate"
-  environment            = "test"
-  label_order            = ["name", "environment"]
+  source  = "clouddrove/acm/aws"
+  version = "1.4.1"
+
+  name                   = "${local.name}-certificate"
+  environment            = local.environment
   domain_name            = "clouddrove.com"
   validation_method      = "EMAIL"
   validate_certificate   = true
@@ -45,10 +48,8 @@ module "acm" {
 module "cdn" {
   source = "./../../"
 
-  name        = "basic-cdn"
-  environment = "test"
-  label_order = ["name", "environment"]
-
+  name                   = "${local.name}-basic"
+  environment            = local.environment
   enabled_bucket         = true
   compress               = false
   aliases                = ["clouddrove.com"]

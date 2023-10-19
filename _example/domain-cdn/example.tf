@@ -1,15 +1,19 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = local.region
+}
+
+locals {
+  region      = "us-east-1"
+  name        = "cloudfront"
+  environment = "test"
 }
 
 module "acm" {
   source  = "clouddrove/acm/aws"
-  version = "1.3.0"
+  version = "1.4.1"
 
-  name        = "certificate"
-  environment = "test"
-  label_order = ["name", "environment"]
-
+  name                   = "${local.name}-certificate"
+  environment            = local.environment
   domain_name            = "clouddrove.com"
   validation_method      = "EMAIL"
   validate_certificate   = true
@@ -19,9 +23,8 @@ module "acm" {
 module "cdn" {
   source = "./../../"
 
-  name                   = "domain-cdn"
-  environment            = "test"
-  label_order            = ["name", "environment"]
+  name                   = "${local.name}-domain"
+  environment            = local.environment
   custom_domain          = true
   compress               = false
   aliases                = ["clouddrove.com"]
