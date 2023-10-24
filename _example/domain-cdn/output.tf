@@ -1,5 +1,5 @@
 output "arn" {
-  value       = module.cdn.*.arn
+  value       = module.cdn[*].arn
   description = "ARN of AWS CloudFront distribution."
 }
 

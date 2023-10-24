@@ -30,8 +30,8 @@ locals {
 
 # Module      : CLOUDFRONT DISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
- #tfsec:ignore:aws-cloudfront-use-secure-tls-policy
- #tfsec:ignore:aws-cloudfront-enable-waf
+#tfsec:ignore:aws-cloudfront-use-secure-tls-policy
+#tfsec:ignore:aws-cloudfront-enable-waf
 resource "aws_cloudfront_distribution" "bucket" {
   count = var.cdn_enabled == true && var.enabled_bucket == true ? 1 : 0
 
@@ -48,7 +48,7 @@ resource "aws_cloudfront_distribution" "bucket" {
     origin_path = var.origin_path
 
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity.*.cloudfront_access_identity_path[0]
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin_access_identity[0].cloudfront_access_identity_path
     }
   }
 
@@ -89,10 +89,10 @@ resource "aws_cloudfront_distribution" "bucket" {
   }
 
   custom_error_response {
-    error_caching_min_ttl  = var.error_caching_min_ttl
-    error_code             = var.error_code
-    response_code          = var.response_code
-    response_page_path     = var.response_page_path
+    error_caching_min_ttl = var.error_caching_min_ttl
+    error_code            = var.error_code
+    response_code         = var.response_code
+    response_page_path    = var.response_page_path
   }
 
   tags = module.labels.tags
@@ -101,7 +101,7 @@ resource "aws_cloudfront_distribution" "bucket" {
 # Module      : CLOUDFRONT CussDISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
 #tfsec:ignore:aws-cloudfront-use-secure-tls-policy
- #tfsec:ignore:aws-cloudfront-enable-waf
+#tfsec:ignore:aws-cloudfront-enable-waf
 resource "aws_cloudfront_distribution" "domain" {
   count = var.cdn_enabled == true && var.custom_domain == true ? 1 : 0
 
