@@ -8,5 +8,5 @@ jobs:
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
-      tfcheck: 'cloudwatch-billing-alert-to-pre-existing-sns-with-acct-id-example / Check code format'
+      tfcheck: 'domain-cdn / Evaluate Terraform versions (1.6.1, ./_example/domain-cdn/)'
 ...
