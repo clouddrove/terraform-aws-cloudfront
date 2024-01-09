@@ -8,5 +8,5 @@ jobs:
     secrets:
       GITHUB: ${{ secrets.GITHUB }}
     with:
-      tfcheck: 'domain-cdn / Evaluate Terraform versions (1.6.1, ./_example/domain-cdn/)'
+      tfcheck: 'bucket-basic / Check code format'
 ...
