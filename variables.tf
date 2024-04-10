@@ -219,7 +219,7 @@ variable "error_code" {
 
 variable "response_page_path" {
   type        = string
-  default     = "/index.html"
+  default     = ""
   description = "The path of the custom error page (for example, /custom_404.html)."
 }
 
@@ -294,8 +294,8 @@ variable "cdn_enabled" {
 
 
 variable "response_code" {
-  type        = string
-  default     = "404"
+  type        = number
+  default     = null
   description = "page not found code"
 }
 

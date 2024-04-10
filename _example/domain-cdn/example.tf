@@ -14,11 +14,14 @@ module "acm" {
 
   name                   = "${local.name}-certificate"
   environment            = local.environment
-  domain_name            = "clouddrove.com"
+  domain_name            = "api.clouddrove.ca"
   validation_method      = "EMAIL"
   validate_certificate   = true
   enable_aws_certificate = true
 }
+
+
+
 
 module "cdn" {
   source = "./../../"
@@ -27,8 +30,8 @@ module "cdn" {
   environment            = local.environment
   custom_domain          = true
   compress               = false
-  aliases                = ["clouddrove.com"]
-  domain_name            = "clouddrove.com"
+  aliases                = ["clouddrove.ca"]
+  domain_name            = "clouddrove.ca"
   viewer_protocol_policy = "redirect-to-https"
   allowed_methods        = ["GET", "HEAD"]
   acm_certificate_arn    = module.acm.arn

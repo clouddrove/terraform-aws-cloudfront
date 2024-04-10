@@ -168,6 +168,8 @@ resource "aws_cloudfront_distribution" "domain" {
   custom_error_response {
     error_code         = var.error_code
     response_page_path = var.response_page_path
+    response_code      = var.response_code
+
   }
 
   tags = module.labels.tags
