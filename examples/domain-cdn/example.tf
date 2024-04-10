@@ -8,6 +8,17 @@ locals {
   environment = "test"
 }
 
+module "s3_bucket" {
+  source  = "clouddrove/s3/aws"
+  version = "2.0.0"
+
+  name        = "${local.name}-secure-bucket-cdn"
+  environment = local.environment
+  versioning  = true
+  acl         = "private"
+}
+
+
 module "acm" {
   source  = "clouddrove/acm/aws"
   version = "1.4.1"
@@ -33,6 +44,7 @@ module "cdn" {
   viewer_protocol_policy = "redirect-to-https"
   allowed_methods        = ["GET", "HEAD"]
   acm_certificate_arn    = module.acm.arn
+  access_log_bucket      = module.s3_bucket.id
 }
 
 

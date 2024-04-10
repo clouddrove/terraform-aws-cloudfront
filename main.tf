@@ -81,6 +81,12 @@ resource "aws_cloudfront_distribution" "bucket" {
     max_ttl                = var.max_ttl
   }
 
+  logging_config {
+    include_cookies = var.include_cookies
+    bucket          = var.access_log_bucket
+    prefix          = var.prefix
+  }
+
   restrictions {
     geo_restriction {
       restriction_type = var.geo_restriction_type
@@ -126,6 +132,13 @@ resource "aws_cloudfront_distribution" "domain" {
       origin_read_timeout      = var.origin_read_timeout
     }
   }
+
+  logging_config {
+    include_cookies = var.include_cookies
+    bucket          = var.access_log_bucket
+    prefix          = var.prefix
+  }
+
 
   viewer_certificate {
     cloudfront_default_certificate = var.acm_certificate_arn == "" ? true : false

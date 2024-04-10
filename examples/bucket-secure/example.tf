@@ -45,6 +45,8 @@ module "cdn" {
   trusted_signers        = ["self"]
   public_key_enable      = true
   public_key             = "./cdn.pem"
+  access_log_bucket      = module.s3_bucket.id
+
 }
 
 
