@@ -15,7 +15,7 @@ updates:
     reviewers:
       - "approvers"
   - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "_example/bucket-basic" # Location of package manifests
+    directory: "examples/bucket-basic" # Location of package manifests
     schedule:
       interval: "weekly"
     # Add assignees
@@ -25,7 +25,7 @@ updates:
     reviewers:
       - "approvers"
   - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "_example/bucket-secure" # Location of package manifests
+    directory: "examples/bucket-secure" # Location of package manifests
     schedule:
       interval: "weekly"
     # Add assignees
@@ -35,7 +35,7 @@ updates:
     reviewers:
       - "approvers"
   - package-ecosystem: "terraform" # See documentation for possible values
-    directory: "_example/domain-cdn" # Location of package manifests
+    directory: "examples/domain-cdn" # Location of package manifests
     schedule:
       interval: "weekly"
     # Add assignees
