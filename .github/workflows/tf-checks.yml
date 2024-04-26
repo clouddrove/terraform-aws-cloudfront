@@ -8,12 +8,12 @@ jobs:
   bucket-basic:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.9
     with:
-      working_directory: './_example/bucket-basic/'
+      working_directory: './examples/bucket-basic/'
   bucket-secure:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.9
     with:
-      working_directory: './_example/bucket-secure/'
+      working_directory: './examples/bucket-secure/'
   domain-cdn:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@1.0.9
     with:
-      working_directory: './_example/domain-cdn/'
+      working_directory: './examples/domain-cdn/'
