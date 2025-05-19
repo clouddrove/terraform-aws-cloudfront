@@ -24,13 +24,13 @@ module "acm" {
   source  = "clouddrove/acm/aws"
   version = "1.4.1"
 
-  name                 = "${local.name}-certificate"
-  environment          = local.environment
+  name                      = "${local.name}-certificate"
+  environment               = local.environment
   domain_name               = "clouddrove.ca"
   subject_alternative_names = ["clouddrove.ca", "*.clouddrove.ca"]
-  enable = true
-  validation_method    = "DNS"
-  validate_certificate = true
+  enable                    = true
+  validation_method         = "DNS"
+  validate_certificate      = true
 }
 
 ##---------------------------------------------------------------------------------------------------------------------------
@@ -275,7 +275,7 @@ module "cdn" {
       # Using Cache/ResponseHeaders/OriginRequest policies is not allowed together with `compress` and `query_string` settings
       compress     = true
       query_string = true
-    },    
+    },
     {
       path_pattern           = "/api/*"
       target_origin_id       = "elb_origin"

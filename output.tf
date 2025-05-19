@@ -1,31 +1,31 @@
 # Module      : CLOUDFRONT DISTRIBUSTION
 # Description : Creates an Amazon CloudFront web distribution
 output "id" {
-  value = try(aws_cloudfront_distribution.this[0].id, "")
+  value       = try(aws_cloudfront_distribution.this[0].id, "")
   description = "The identifier for the distribution."
 }
 
 output "arn" {
-  value = try(aws_cloudfront_distribution.this[0].arn, "")
+  value       = try(aws_cloudfront_distribution.this[0].arn, "")
   description = "The ARN (Amazon Resource Name) for the distribution."
 }
 
 output "status" {
-  value = try(aws_cloudfront_distribution.this[0].status, "")
+  value       = try(aws_cloudfront_distribution.this[0].status, "")
   description = "The current status of the distribution."
 }
 
 output "domain_name" {
-  value = try(aws_cloudfront_distribution.this[0].domain_name, "")
+  value       = try(aws_cloudfront_distribution.this[0].domain_name, "")
   description = "The domain name corresponding to the distribution."
 }
 
 output "etag" {
-  value = try(aws_cloudfront_distribution.this[0].etag, "")
+  value       = try(aws_cloudfront_distribution.this[0].etag, "")
   description = "The current version of the distribution's information."
 }
 output "hosted_zone_id" {
-  value = try(aws_cloudfront_distribution.this[0].hosted_zone_id, "")
+  value       = try(aws_cloudfront_distribution.this[0].hosted_zone_id, "")
   description = "The CloudFront Route 53 zone ID that can be used to route an Alias Resource Record Set to."
 }
 

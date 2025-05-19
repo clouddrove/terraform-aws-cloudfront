@@ -14,11 +14,11 @@ module "acm" {
   source  = "clouddrove/acm/aws"
   version = "1.4.1"
 
-  name                   = "${local.name}-cdn-certificate"
-  environment            = local.environment
-  domain_name            = local.domain_name
-  enable = true
-  validation_method      = "DNS"
+  name                      = "${local.name}-cdn-certificate"
+  environment               = local.environment
+  domain_name               = local.domain_name
+  enable                    = true
+  validation_method         = "DNS"
   subject_alternative_names = ["*.clouddrove.ca"]
   # validate_certificate   = true
   # enable_aws_certificate = true

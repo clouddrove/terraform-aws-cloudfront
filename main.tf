@@ -27,7 +27,7 @@ module "labels" {
 # Description : Creates an Amazon CloudFront origin access identity
 resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
   for_each = local.create_origin_access_identity ? var.origin_access_identities : {}
-  comment = format("access-identity-%s.s3.amazonaws.com", var.bucket_name)
+  comment  = format("access-identity-%s.s3.amazonaws.com", var.bucket_name)
 }
 
 locals {
