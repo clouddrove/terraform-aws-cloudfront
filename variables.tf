@@ -44,6 +44,18 @@ variable "aliases" {
   description = "List of FQDN's - Used to set the Alternate Domain Names (CNAMEs) setting on Cloudfront."
 }
 
+variable "continuous_deployment_policy_id" {
+  description = "Identifier of a continuous deployment policy. This argument should only be set on a production distribution."
+  type        = string
+  default     = null
+}
+
+variable "http_version" {
+  description = "The maximum HTTP version to support on the distribution. Allowed values are http1.1, http2, http2and3, and http3. The default is http2."
+  type        = string
+  default     = "http2"
+}
+
 variable "bucket_name" {
   type        = string
   default     = ""
@@ -51,10 +63,111 @@ variable "bucket_name" {
   sensitive   = true
 }
 
+variable "origin" {
+  description = "One or more origins for this distribution (multiples allowed)."
+  type        = any
+  default     = null
+}
+
+variable "origin_group" {
+  description = "One or more origin_group for this distribution (multiples allowed)."
+  type        = any
+  default     = {}
+}
+
 variable "origin_path" {
   type        = string
   default     = ""
   description = "An optional element that causes CloudFront to request your content from a directory in your Amazon S3 bucket or your custom origin. It must begin with a /. Do not add a / at the end of the path."
+}
+
+variable "create_origin_access_identity" {
+  description = "Controls if CloudFront origin access identity should be created"
+  type        = bool
+  default     = false
+}
+
+variable "origin_access_identities" {
+  description = "Map of CloudFront origin access identities (value as a comment)"
+  type        = map(string)
+  default     = {}
+}
+
+variable "create_origin_access_control" {
+  description = "Controls if CloudFront origin access control should be created"
+  type        = bool
+  default     = false
+}
+
+variable "origin_access_control" {
+  description = "Map of CloudFront origin access control"
+  type = map(object({
+    description      = string
+    origin_type      = string
+    signing_behavior = string
+    signing_protocol = string
+  }))
+
+  default = {
+    s3 = {
+      description      = "",
+      origin_type      = "s3",
+      signing_behavior = "always",
+      signing_protocol = "sigv4"
+    }
+  }
+}
+
+variable "create_vpc_origin" {
+  description = "If enabled, the resource for VPC origin will be created."
+  type        = bool
+  default     = false
+}
+
+variable "vpc_origin" {
+  description = "Map of CloudFront VPC origin"
+  type = map(object({
+    name                   = string
+    arn                    = string
+    http_port              = number
+    https_port             = number
+    origin_protocol_policy = string
+    origin_ssl_protocols = object({
+      items    = list(string)
+      quantity = number
+    })
+  }))
+  default = {}
+}
+
+variable "logging_config" {
+  description = "The logging configuration that controls how logs are written to your distribution (maximum one)."
+  type        = any
+  default     = {}
+}
+
+variable "geo_restriction" {
+  description = "The restriction configuration for this distribution (geo_restrictions)"
+  type        = any
+  default     = {}
+}
+
+variable "custom_error_response" {
+  description = "One or more custom error response elements"
+  type        = any
+  default     = {}
+}
+
+variable "ordered_cache_behavior" {
+  description = "An ordered list of cache behaviors resource for this distribution. List from top to bottom in order of precedence. The topmost cache behavior will have precedence 0."
+  type        = any
+  default     = []
+}
+
+variable "default_cache_behavior" {
+  description = "The default cache behavior for this distribution"
+  type        = any
+  default     = null
 }
 
 variable "viewer_protocol_policy" {
@@ -149,12 +262,6 @@ variable "acm_certificate_arn" {
   sensitive   = true
 }
 
-variable "minimum_protocol_version" {
-  type        = string
-  default     = "TLSv1"
-  description = "Cloudfront TLS minimum protocol version."
-}
-
 variable "is_ipv6_enabled" {
   type        = bool
   default     = true
@@ -179,6 +286,15 @@ variable "enabled_bucket" {
   description = "If cdn create with s3 bucket."
 }
 
+variable "viewer_certificate" {
+  description = "The SSL configuration for this distribution"
+  type        = any
+  default = {
+    cloudfront_default_certificate = true
+    minimum_protocol_version       = "TLSv1"
+  }
+}
+
 variable "custom_domain" {
   type        = bool
   default     = false
@@ -195,12 +311,6 @@ variable "default_root_object" {
   type        = string
   default     = "index.html"
   description = "Object that CloudFront return when requests the root URL."
-}
-
-variable "ssl_support_method" {
-  type        = string
-  default     = "sni-only"
-  description = "Specifies how you want CloudFront to serve HTTPS requests. One of `vip` or `sni-only`."
 }
 
 variable "forward_cookies_whitelisted_names" {
@@ -277,6 +387,24 @@ variable "domain_name" {
   default     = ""
   description = "The DNS domain name of your custom origin (e.g. clouddrove.com)."
   sensitive   = true
+}
+
+variable "retain_on_delete" {
+  description = "Disables the distribution instead of deleting it when destroying the resource through Terraform. If this is set, the distribution needs to be deleted manually afterwards."
+  type        = bool
+  default     = false
+}
+
+variable "wait_for_deployment" {
+  description = "If enabled, the resource will wait for the distribution status to change from InProgress to Deployed. Setting this to false will skip the process."
+  type        = bool
+  default     = true
+}
+
+variable "staging" {
+  description = "Whether the distribution is a staging distribution."
+  type        = bool
+  default     = false
 }
 
 variable "web_acl_id" {
