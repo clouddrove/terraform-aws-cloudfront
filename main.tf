@@ -352,6 +352,13 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
   tags = module.labels.tags
+
+  lifecycle {
+    ignore_changes = [
+      origin,
+      viewer_certificate[0].cloudfront_default_certificate
+    ]
+  }
 }
 
 
