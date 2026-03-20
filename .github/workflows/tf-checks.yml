@@ -9,11 +9,14 @@ jobs:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       working_directory: './examples/bucket-basic/'
+      provider: none
   bucket-secure:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       working_directory: './examples/bucket-secure/'
+      provider: none
   domain-cdn:
     uses: clouddrove/github-shared-workflows/.github/workflows/tf-checks.yml@master
     with:
       working_directory: './examples/domain-cdn/'
+      provider: none
