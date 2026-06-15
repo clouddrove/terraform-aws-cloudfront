@@ -25,6 +25,7 @@
 | environment | Environment (e.g. `prod`, `dev`, `staging`). | `string` | `""` | no |
 | error\_caching\_min\_ttl | the value of errro caching min ttl | `string` | `"10"` | no |
 | error\_code | List of forwarded cookie names. | `string` | `"403"` | no |
+| extra\_tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`). | `map(string)` | `{}` | no |
 | forward\_cookies | Time in seconds that browser can cache the response for S3 bucket. | `string` | `"none"` | no |
 | forward\_cookies\_whitelisted\_names | List of forwarded cookie names. | `list(any)` | `[]` | no |
 | forward\_header\_values | A list of whitelisted header values to forward to the origin. | `list(string)` | <pre>[<br>  "Access-Control-Request-Headers",<br>  "Access-Control-Request-Method",<br>  "Origin"<br>]</pre> | no |
