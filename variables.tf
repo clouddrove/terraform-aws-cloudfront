@@ -439,3 +439,23 @@ variable "error_caching_min_ttl" {
   default     = "10"
   description = "the value of errro caching min ttl"
 }
+
+variable "viewer_mtls_config" {
+  type        = any
+  default     = {}
+  description = <<-EOT
+    Viewer mTLS, so CloudFront verifies a client certificate before the request
+    reaches the origin and forwards the certificate details as headers.
+
+    Empty (the default) leaves the distribution open to any client.
+
+    Keys:
+      trust_store_id                 (required) id of an aws_cloudfront_trust_store
+      mode                           required | optional, defaults to required.
+                                     "optional" admits clients presenting no
+                                     certificate at all.
+      advertise_trust_store_ca_names whether to advertise the trust store CA
+                                     names to clients
+      ignore_certificate_expiry      accept expired client certificates
+  EOT
+}
