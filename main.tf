@@ -150,7 +150,7 @@ resource "aws_cloudfront_distribution" "this" {
         for_each = length(keys(lookup(origin.value, "vpc_origin_config", {}))) == 0 ? [] : [lookup(origin.value, "vpc_origin_config", {})]
 
         content {
-          vpc_origin_id            = lookup(vpc_origin_config.value, "vpc_origin_id", lookup(lookup(aws_cloudfront_vpc_origin.this, lookup(vpc_origin_config.value, "vpc_origin", ""), {}), "id", null))
+          vpc_origin_id            = lookup(vpc_origin_config.value, "vpc_origin_id", lookup(lookup(aws_cloudfront_vpc_origin.vpc_origin, lookup(vpc_origin_config.value, "vpc_origin", ""), {}), "id", null))
           origin_keepalive_timeout = lookup(vpc_origin_config.value, "origin_keepalive_timeout", null)
           origin_read_timeout      = lookup(vpc_origin_config.value, "origin_read_timeout", null)
         }
