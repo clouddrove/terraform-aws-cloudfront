@@ -86,6 +86,31 @@ resource "aws_cloudfront_distribution" "this" {
   wait_for_deployment             = var.wait_for_deployment
   web_acl_id                      = var.web_acl_id
 
+  ##---------------------------------------------------------------------------
+  ## Viewer mTLS. CloudFront verifies the client certificate against a trust
+  ## store before the request reaches the origin, and forwards the certificate
+  ## details to the origin as headers, so the application does not implement
+  ## certificate validation itself.
+  ##
+  ## The trust store is a separate resource (aws_cloudfront_trust_store); pass
+  ## its id. Left empty, the distribution accepts any client, which for a device
+  ## fleet means the origin is the only thing standing between the internet and
+  ## the application.
+  ##---------------------------------------------------------------------------
+  dynamic "viewer_mtls_config" {
+    for_each = length(keys(var.viewer_mtls_config)) == 0 ? [] : [var.viewer_mtls_config]
+
+    content {
+      mode = lookup(viewer_mtls_config.value, "mode", "required")
+
+      trust_store_config {
+        trust_store_id                 = viewer_mtls_config.value.trust_store_id
+        advertise_trust_store_ca_names = lookup(viewer_mtls_config.value, "advertise_trust_store_ca_names", null)
+        ignore_certificate_expiry      = lookup(viewer_mtls_config.value, "ignore_certificate_expiry", null)
+      }
+    }
+  }
+
   dynamic "logging_config" {
     for_each = length(keys(var.logging_config)) == 0 ? [] : [var.logging_config]
 
