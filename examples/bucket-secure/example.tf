@@ -22,7 +22,7 @@ module "s3_bucket" {
 
 module "acm" {
   source  = "clouddrove/acm/aws"
-  version = "1.4.2"
+  version = "1.4.3"
 
   name                      = "${local.name}-certificate"
   environment               = local.environment
