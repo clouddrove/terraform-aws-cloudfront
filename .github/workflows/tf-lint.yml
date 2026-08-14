@@ -1,5 +1,5 @@
+---
 name: tf-lint
-permissions: write-all
 on:
   pull_request:
     paths:
@@ -8,6 +8,7 @@ on:
 jobs:
   tf-lint:
     if: github.actor != 'dependabot[bot]'
-    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@master
+    uses: clouddrove/github-shared-workflows/.github/workflows/tf-lint.yml@v2
     secrets:
       GITHUB: ${{ secrets.GITHUB_TOKEN }}
+...
