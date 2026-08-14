@@ -37,7 +37,7 @@ data "aws_iam_policy_document" "s3_policy" {
 
 module "acm" {
   source  = "clouddrove/acm/aws"
-  version = "1.4.2"
+  version = "1.4.3"
 
   name                      = "${local.name}-certificate"
   environment               = local.environment
